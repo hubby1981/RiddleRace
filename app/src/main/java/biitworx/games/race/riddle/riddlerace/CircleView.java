@@ -19,7 +19,7 @@ public class CircleView extends View {
     private int posy = 0;
     private int direction = 0;
     private String name = "";
-
+public boolean hit=false;
     public CircleView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -60,16 +60,21 @@ public class CircleView extends View {
 
 
         Rect rc1 = drawWithDegree(canvas, position, distance2, rc2);
-        PlacementCircleView.line(name, rc);
+        PlacementCircleView.line(this, rc);
 
         canvas.drawRoundRect(rc1.left, rc1.top, rc1.right, rc1.bottom, rc1.width() / 3, rc1.height() / 3, carLine);
 
-        PlacementCircleView.circle(name, rc1);
+        PlacementCircleView.circle(this, rc1);
 
     }
 
     public void move() {
-        position += mover;
+        if(hit)
+        {
+            position+=mover/4;
+        }else {
+            position += mover;
+        }
         if (position > 360)
             position = 0;
     }
