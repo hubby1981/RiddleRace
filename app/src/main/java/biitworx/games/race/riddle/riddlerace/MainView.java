@@ -6,59 +6,124 @@ import android.os.Bundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import biitworx.games.race.riddle.riddlerace.data.helper.poco.Level;
+import biitworx.games.race.riddle.riddlerace.data.helper.poco.Levels;
+
 public class MainView extends AppCompatActivity {
 
     Runnable update;
-    Timer time;
+    Runnable update2;
+
+    static Timer time;
+    int count = 3;
+private Level level;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_view);
-        update=new Runnable() {
+        update = new Runnable() {
             @Override
             public void run() {
                 updateView();
             }
         };
+        update2 = new Runnable() {
+            @Override
+            public void run() {
+                updateView2();
+            }
+        };
+        count = 3;
 
-time=new Timer();
+        time = new Timer();
         time.schedule(new TimerTask() {
             @Override
             public void run() {
-                runOnUiThread(update);
+                PlacementCircleView place = (PlacementCircleView) findViewById(R.id.place);
+                if (place != null) {
+                    findLevel();
+                    place.count = count - 1;
+                    runOnUiThread(update2);
+                    count--;
+                    if (count == 0) {
+                        place.count = 0;
+                        newRun();
+
+                    }
+                }
+
             }
-        },1,20);
+        }, 1000, 1000);
+
 
     }
 
+    private void findLevel(){
+        PlacementCircleView place = (PlacementCircleView) findViewById(R.id.place);
+        if (place != null) {
+            level = Levels.getLevel(place.name);
+            if(level==null){
+                level=new Level(place.name,place.min,place.med,place.max);
+                Levels.addLevel(level);
+            }
+        }
+    }
 
-    public void updateView(){
+    public void newRun() {
+        if (count == 0) {
+            if (time != null) time.cancel();
+            time = new Timer();
+            time.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(update);
+                }
+            }, 1, 20);
+        }
+    }
 
-        PlacementCircleView place = (PlacementCircleView)findViewById(R.id.place);
-        if(place!=null){
+    public void updateView2() {
 
+        PlacementCircleView place = (PlacementCircleView) findViewById(R.id.place);
+        if (place != null) {
+            place.setView(this);
             place.invalidate();
         }
-        CircleView view = (CircleView)findViewById(R.id.circle);
-        if(view!=null){
-            view.move();
-            view.invalidate();
+
+    }
+
+    public void updateView() {
+
+        PlacementCircleView place = (PlacementCircleView) findViewById(R.id.place);
+        if (place != null) {
+            place.setView(this);
+
+
+            if (place.hasHit()) {
+                time.cancel();
+                place.crashed = true;
+
+                level.setScore(place.rounds);
+                Levels.updateLevel(level);
+
+            } else {
+
+
+                for (CircleView view : place.allViews()) {
+                    view.move();
+                    view.invalidate();
+                }
+            }
+            place.invalidate();
         }
 
-        CircleView view2 = (CircleView)findViewById(R.id.circle2);
-        if(view2!=null){
-            view2.move();
-            view2.invalidate();
-        }
+    }
 
-        CircleView view3 = (CircleView)findViewById(R.id.circle3);
-        if(view3!=null){
-            view3.move();
-            view3.invalidate();
-        }
+    @Override
+    public void onPause() {
+        super.onPause();
+        count=3;
+        if(time!=null)time.cancel();
+        PlacementCircleView place = (PlacementCircleView) findViewById(R.id.place);
 
-        if(place!=null&&place.hasHit()){
-            time.cancel();
-        }
     }
 }

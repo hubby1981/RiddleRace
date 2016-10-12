@@ -12,58 +12,49 @@
 
     <biitworx.games.race.riddle.riddlerace.PlacementCircleView
         android:id="@+id/place"
+        name="Level I - Rings"
+        max="100"
+        med="75"
+        min="50"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        name = "Level I - Hazard"
+
         />
 
     <biitworx.games.race.riddle.riddlerace.CircleView
-        android:id="@+id/circle"
+        android:id="@+id/circleGreen"
 
-        blue="120"
+        blue="100"
         direction="0"
         green="200"
+        inverse="0"
         length="1"
+        position="270"
         position-x="15"
         position-y="0"
         red="50"
-        speed="4"
+        speed="5"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
 
         />
 
 
-
     <biitworx.games.race.riddle.riddlerace.CircleView
-        android:id="@+id/circle3"
+        android:id="@+id/circleRed"
 
         blue="90"
         direction="1"
         green="90"
+        inverse="0"
         length="1"
+        position="90"
         position-x="15"
-        position-y="0"
-        red="255"
-        speed="5"
-
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
-
-    <biitworx.games.race.riddle.riddlerace.CircleView
-
-        blue="200"
-        direction="0"
-        green="200"
-        length="1"
-        position-x="0"
         position-y="15"
-        red="0"
-        speed="3"
-
+        red="255"
+        speed="4"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
-
 
 
 </RelativeLayout>
