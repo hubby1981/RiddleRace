@@ -13,8 +13,8 @@ import java.util.Random;
 /**
  * Created by marce_000 on 10.10.2016.
  */
-public class CircleView extends View {
-    public static final int ccNext = 19;
+public class CircleView {
+    public int ccNext = 20;
     public Paint carLine = new Paint();
     public Paint carLine2 = new Paint();
 
@@ -33,11 +33,14 @@ public class CircleView extends View {
     public int blue;
     public int inverse = 0;
     public boolean rr = false;
+    public boolean crashed = false;
 
-    public CircleView(Context context, AttributeSet attrs) {
-        super(context, attrs);
 
-        PlacementCircleView.all(this);
+
+
+
+    public CircleView(PlacementCircleView view ,int red,int green,int blue,int speed,int positionx,int positiony,int direction,int length,int inverse,int position,int next){
+
         carLine.setStyle(Paint.Style.FILL);
         carLine.setAntiAlias(true);
 
@@ -45,23 +48,23 @@ public class CircleView extends View {
         carLine2.setAntiAlias(true);
         carLine2.setColor(Color.argb(128, 50, 50, 50));
         carLine2.setStrokeWidth(1);
-        red = Integer.parseInt(attrs.getAttributeValue(null, "red"));
-        green = Integer.parseInt(attrs.getAttributeValue(null, "green"));
-        blue = Integer.parseInt(attrs.getAttributeValue(null, "blue"));
 
-        mover = Integer.parseInt(attrs.getAttributeValue(null, "speed"));
-        posx = Integer.parseInt(attrs.getAttributeValue(null, "position-x"));
-        posy = Integer.parseInt(attrs.getAttributeValue(null, "position-y"));
-        direction = Integer.parseInt(attrs.getAttributeValue(null, "direction"));
-        length = Integer.parseInt(attrs.getAttributeValue(null, "length"));
-        inverse = Integer.parseInt(attrs.getAttributeValue(null, "inverse"));
 
-        position = Integer.parseInt(attrs.getAttributeValue(null, "position"));
-
+        this.red=red;
+        this.green=green;
+        this.blue=blue;
+        this.mover=speed;
+        this.posx=positionx;
+        this.posy=positiony;
+        this.direction=direction;
+        this.length=length;
+        this.inverse=inverse;
+        this.position=position;
+        this.ccNext=next;
     }
 
-    @Override
-    public void onDraw(Canvas canvas) {
+
+    public void drawMe(Canvas canvas) {
         Rect rc = canvas.getClipBounds();
         PlacementCircleView.line(this, rc);
         int color = 200;
@@ -143,8 +146,9 @@ public class CircleView extends View {
         for (int i = 0; i < length; i++) {
             Rect rc1 = drawWithDegree(p, distance2, rc2);
 
+            if (!crashed)
+                canvas.drawCircle(rc1.centerX(), rc1.centerY(), rc1.height() / 1.85f, carLine);
 
-            canvas.drawCircle(rc1.centerX(), rc1.centerY(), rc1.height() / 1.85f, carLine);
             //canvas.drawCircle(rc1.centerX(), rc1.centerY(), rc1.height() / 1.85f, carLine2);
 
             PlacementCircleView.circle(this, rc1);
@@ -189,7 +193,7 @@ public class CircleView extends View {
                 round++;
                 rr = true;
                 position = 0;
-                if (length < ccNext && count > ccNext) {
+                if (length < ccNext*3 && count > ccNext) {
                     length += 1;
                     count = 1;
                     mover += 0.25f;
@@ -203,7 +207,7 @@ public class CircleView extends View {
                 round++;
                 rr = true;
                 position = 360;
-                if (length < ccNext && count > ccNext) {
+                if (length < ccNext*3 && count > ccNext) {
                     length += 1;
                     count = 1;
                     mover += 0.25f;

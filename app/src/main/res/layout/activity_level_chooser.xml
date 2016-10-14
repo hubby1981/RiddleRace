@@ -7,32 +7,16 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#FFFACA"
+    android:background="#336365"
     tools:context="biitworx.games.race.riddle.riddlerace.LevelChooser">
 
+    <biitworx.games.race.riddle.riddlerace.LevelView
+        android:id="@+id/view"
+        name="basic"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+
+        />
 
 
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Level 1"
-            android:onClick="level1"
-            />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Level 2"
-            android:onClick="level2"
-            />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Level 3"
-            android:onClick="level3"
-            />
-    </TableLayout>
 </RelativeLayout>

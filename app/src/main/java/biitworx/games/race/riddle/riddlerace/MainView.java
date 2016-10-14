@@ -1,25 +1,45 @@
 package biitworx.games.race.riddle.riddlerace;
 
+import android.graphics.Canvas;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import biitworx.games.race.riddle.riddlerace.data.helper.poco.Circle;
 import biitworx.games.race.riddle.riddlerace.data.helper.poco.Level;
 import biitworx.games.race.riddle.riddlerace.data.helper.poco.Levels;
 
-public class MainView extends AppCompatActivity {
+public abstract class MainView extends AppCompatActivity {
 
     Runnable update;
     Runnable update2;
 
     static Timer time;
     int count = 3;
-private Level level;
+    private Level level;
+
+    private ArrayList<CircleView> views = new ArrayList<>();
+    private PlacementCircleView place;
+
+    public void add(CircleView view) {
+        views.add(view);
+
+    }
+
+    public void addPlacement(PlacementCircleView place) {
+        this.place = place;
+        findLevel();
+        this.setContentView(place);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initViews();
         update = new Runnable() {
             @Override
             public void run() {
@@ -38,9 +58,10 @@ private Level level;
         time.schedule(new TimerTask() {
             @Override
             public void run() {
-                PlacementCircleView place = (PlacementCircleView) findViewById(R.id.place);
+
                 if (place != null) {
-                    findLevel();
+
+
                     place.count = count - 1;
                     runOnUiThread(update2);
                     count--;
@@ -57,15 +78,11 @@ private Level level;
 
     }
 
-    private void findLevel(){
-        PlacementCircleView place = (PlacementCircleView) findViewById(R.id.place);
-        if (place != null) {
-            level = Levels.getLevel(place.name);
-            if(level==null){
-                level=new Level(place.name,place.min,place.med,place.max);
-                Levels.addLevel(level);
-            }
-        }
+    protected abstract void initViews();
+
+    protected void findLevel() {
+        level = Levels.getLevel(place.name);
+        place.level=level;
     }
 
     public void newRun() {
@@ -83,7 +100,7 @@ private Level level;
 
     public void updateView2() {
 
-        PlacementCircleView place = (PlacementCircleView) findViewById(R.id.place);
+
         if (place != null) {
             place.setView(this);
             place.invalidate();
@@ -93,24 +110,27 @@ private Level level;
 
     public void updateView() {
 
-        PlacementCircleView place = (PlacementCircleView) findViewById(R.id.place);
+
         if (place != null) {
             place.setView(this);
 
+            if (!place.crashed) {
+                if (place.hasHit()) {
+                    time.cancel();
+                    place.crashed = true;
+                    if (level != null && level.getScore() < place.rounds) {
+                        level.setScore(place.rounds);
+                        Levels.updateLevel(level);
+                    }
 
-            if (place.hasHit()) {
-                time.cancel();
-                place.crashed = true;
 
-                level.setScore(place.rounds);
-                Levels.updateLevel(level);
-
-            } else {
+                } else {
 
 
-                for (CircleView view : place.allViews()) {
-                    view.move();
-                    view.invalidate();
+                    for (CircleView view : place.allViews()) {
+                        view.move();
+
+                    }
                 }
             }
             place.invalidate();
@@ -118,12 +138,26 @@ private Level level;
 
     }
 
+    @NonNull
+    protected PlacementCircleView getPlacementCircleView(String idName) {
+
+        PlacementCircleView place = new PlacementCircleView(getApplicationContext(), idName);
+
+
+        addPlacement(place);
+
+        for (Circle c : level.getCircles()){
+            place.addAll(new CircleView(place,c.getRed(),c.getGreen(),c.getBlue(),c.getMover(),c.getPosx(),c.getPosy(),c.getDirection(),c.getLength(),c.getInverse(),c.getPosition(),c.getNext()));
+        }
+            return place;
+    }
+
     @Override
     public void onPause() {
         super.onPause();
-        count=3;
-        if(time!=null)time.cancel();
-        PlacementCircleView place = (PlacementCircleView) findViewById(R.id.place);
+        count = 3;
+        place.start(level);
+        if (time != null) time.cancel();
 
     }
 }

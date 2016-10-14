@@ -23,7 +23,7 @@ public class SecureDataSetup {
     public SecureDataSetup() {
 
         ///TODO: tables to add
-        secureDataList.add(Level.class);
+        //secureDataList.add(Level.class);
     }
 
     public HashMap<String, List<Object>> getAll(SQLiteDatabase db) {

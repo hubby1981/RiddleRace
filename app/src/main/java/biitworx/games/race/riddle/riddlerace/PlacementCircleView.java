@@ -22,6 +22,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import biitworx.games.race.riddle.riddlerace.data.helper.poco.Level;
+import biitworx.games.race.riddle.riddlerace.data.helper.poco.Levels;
+import biitworx.games.race.riddle.riddlerace.levels.basic.bundle.Bundles;
+import biitworx.games.race.riddle.riddlerace.levels.basic.bundle.LevelBundle;
+
 /**
  * Created by marce_000 on 10.10.2016.
  */
@@ -38,29 +43,26 @@ public class PlacementCircleView extends View {
     private HashMap<CircleView, Rect> hiter = new HashMap<>();
 
     public static int rounds = 0;
-    public int min = 0;
-    public int med = 0;
-    public int max = 0;
 
     public static boolean crashed = false;
     private MainView view;
     public int count = 3;
     private Canvas mCanvas;
+    public Level level;
+    public CrashedView crashedView = new CrashedView();
 
-    public PlacementCircleView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public PlacementCircleView(Context context,String name) {
+        super(context);
         circleLine.setStyle(Paint.Style.STROKE);
         circleLine.setAntiAlias(true);
         circleLine.setColor(Color.argb(128, 255, 255, 255));
         circleLine2.setStyle(Paint.Style.STROKE);
         circleLine2.setAntiAlias(true);
 
-        name = attrs.getAttributeValue(null, "name");
+        this.name = name;
         back.setStyle(Paint.Style.FILL);
         back.setColor(Color.argb(255, 255, 240, 220));
-        min = Integer.parseInt(attrs.getAttributeValue(null, "min"));
-        med = Integer.parseInt(attrs.getAttributeValue(null, "med"));
-        max = Integer.parseInt(attrs.getAttributeValue(null, "max"));
+
 
     }
 
@@ -68,13 +70,13 @@ public class PlacementCircleView extends View {
         this.view = view;
     }
 
-    @Override
+
     public void onDraw(Canvas canvas) {
         if (crashed) {
-            if(rounds>=min){
+            if (rounds >=level.getMin()) {
                 back.setColor(Color.argb(255, 220, 255, 220));
 
-            }else{
+            } else {
                 back.setColor(Color.argb(255, 255, 220, 220));
 
             }
@@ -137,7 +139,7 @@ public class PlacementCircleView extends View {
             String text = name;
             float wt = p1.measureText(text);
             canvas.drawText(text, rcTop.exactCenterX() - wt / 2, rcTop.exactCenterY(), p1);
-            text = "Lap: " + String.valueOf(rounds) + " / " + String.valueOf(min);
+            text = "Lap: " + String.valueOf(rounds) + " / " + String.valueOf(level.getMin());
             float wt2 = p1.measureText(text);
             canvas.drawText(text, rcTop.exactCenterX() - wt2 / 2, rcTop.exactCenterY() + p1.getTextSize(), p1);
             for (CircleView v : allViews()) {
@@ -191,46 +193,14 @@ public class PlacementCircleView extends View {
             float cm = p2.measureText(cc);
             canvas.drawText(cc, inner.exactCenterX() - cm / 2, inner.exactCenterY() + cm / 2, p2);
         }
-    }
 
+        if (crashed) {
 
-    private int findCamera() {
-        int cameraId = -1;
-        // Search for the front facing camera
-        int numberOfCameras = Camera.getNumberOfCameras();
-        for (int i = 0; i < numberOfCameras; i++) {
-            Camera.CameraInfo info = new Camera.CameraInfo();
-            Camera.getCameraInfo(i, info);
-            if (info.facing == Camera.CameraInfo.CAMERA_FACING_BACK) {
+            crashedView.onDraw(canvas);
+        } else {
+            for (CircleView v : allViews()) {
 
-                cameraId = i;
-                break;
-            }
-        }
-        return cameraId;
-    }
-
-    private Camera.PictureCallback mpic = new Camera.PictureCallback() {
-        @Override
-        public void onPictureTaken(byte[] data, Camera camera) {
-            camera.startPreview();
-            Bitmap bitmapPicture = BitmapFactory.decodeByteArray(data, 0,
-                    data.length);
-
-            mCanvas.drawBitmap(bitmapPicture, new Rect(0, 0, bitmapPicture.getWidth(), bitmapPicture.getHeight()), new Rect(0, 0, mCanvas.getWidth(), mCanvas.getHeight()), null);
-
-            camera.release();
-        }
-    };
-
-    private void makePicture() {
-
-        Camera cam = Camera.open();
-        if (cam != null) {
-            try {
-                cam.takePicture(null, null, null, mpic);
-            } catch (Exception e) {
-
+                v.drawMe(canvas);
             }
         }
     }
@@ -259,16 +229,24 @@ public class PlacementCircleView extends View {
         circles.clear();
     }
 
-    public static void start() {
+    public void start(Level levelItem) {
+        for (CircleView v : all)
+            v.crashed = false;
         circles.clear();
         lines.clear();
         rounds = 0;
         all.clear();
         flushed = false;
         crashed = false;
+        level = levelItem;
+
     }
 
     public static void all(CircleView view) {
+        all.add(view);
+    }
+
+    public void addAll(CircleView view) {
         all.add(view);
     }
 
@@ -303,13 +281,13 @@ public class PlacementCircleView extends View {
     }
 
 
-    @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            int x = (int) event.getX();
+            int y = (int) event.getY();
             if (count == 0) {
                 if (!crashed) {
-                    int x = (int) event.getX();
-                    int y = (int) event.getY();
+
                     for (Map.Entry<CircleView, Rect> item : hiter.entrySet()) {
                         if (item.getKey().hit && !item.getValue().contains(x, y))
                             return false;
@@ -321,13 +299,45 @@ public class PlacementCircleView extends View {
                         }
                     }
                 } else {
-                    start();
-                    count = 3;
-                    if (view != null)
-                        view.finish();
+
+                    if (crashedView.isRetry(x, y)) {
+
+
+                        retryIt();
+                    }
+
+                    if (crashedView.isNext(x, y)) {
+
+                        if (level.getScore() >= level.getMin()) {
+                            Level next = Levels.getLevel(level.getNext());
+                            if (next != null) {
+                                LevelChooser.that.openActivity(Bundles.getByName(next.getName()),next);
+                            }
+                        } else {
+                            retryIt();
+                        }
+                    }
+
+                    clean();
+
                 }
             }
         }
         return false;
+    }
+
+    private void clean() {
+        if (view != null)
+            view.finish();
+        start(null);
+        count = 3;
+    }
+
+    private void retryIt() {
+        Class bb = Bundles.getByName(name);
+        if (bb != null) {
+            LevelChooser.that.openActivity(bb, level);
+
+        }
     }
 }

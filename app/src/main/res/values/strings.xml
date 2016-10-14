@@ -1,4 +1,18 @@
 <resources>
     <string name="app_name">RiddleRace</string>
     <string name="title_activity_level1">Level1</string>
+
+
+    <string name="bundle_basic_level_1">Level I - Rings</string>
+    <string name="bundle_basic_level_2">Level II - Hazard</string>
+    <string name="bundle_basic_level_3">Level III - Magic</string>
+
+    <string name="bundle_basic_level_4">Level IV - Snowy</string>
+    <string name="bundle_basic_level_5">Level V - Bongo Time</string>
+    <string name="bundle_basic_level_6">Level VI - Easy</string>
+
+    <string name="bundle_basic_level_7">Level VII - Tree</string>
+    <string name="bundle_basic_level_8">Level VIII - Happy</string>
+    <string name="bundle_basic_level_9">Level IX - Tornado</string>
+    <string name="bundle_basic_level_10">Level X - Coffee</string>
 </resources>

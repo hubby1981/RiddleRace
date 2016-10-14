@@ -3,6 +3,7 @@ package biitworx.games.race.riddle.riddlerace.data.helper;
 import java.util.ArrayList;
 import java.util.List;
 
+import biitworx.games.race.riddle.riddlerace.data.helper.poco.Circle;
 import biitworx.games.race.riddle.riddlerace.data.helper.poco.Level;
 
 /**
@@ -18,6 +19,8 @@ public class Setup {
 
 ///TODO: tables to add
         tables.add(Level.class);
+        tables.add(Circle.class);
+
     }
 
     public SecureDataSetup secure() {
