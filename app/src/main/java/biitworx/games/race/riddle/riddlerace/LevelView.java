@@ -161,7 +161,7 @@ public class LevelView extends View {
         tileStroke.setFakeBoldText(true);
         tileStroke.setStyle(Paint.Style.FILL_AND_STROKE);
         if (bAdd) {
-            tileStroke.setColor(Color.argb(255, 230, 230, 230));
+            tileStroke.setColor(Color.argb(255, 255, 255, 255));
 
         }
 

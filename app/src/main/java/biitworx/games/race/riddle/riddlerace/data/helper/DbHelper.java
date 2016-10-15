@@ -18,7 +18,7 @@ import java.util.UUID;
  */
 public class DbHelper extends SQLiteOpenHelper {
     private final static String DBNAME = "arcade.games.biitworx.riddlerace";
-    private final static int version = 21;
+    private final static int version = 22;
     public static final String SELECT_FROM = "SELECT * FROM ";
     public static final String SELECT_ROWID = "SELECT last_insert_rowid() AS rowid FROM ";
     public static final String LIMIT_1 = " LIMIT 1";
