@@ -61,7 +61,7 @@ public class Levels {
         if (bundle != null) {
             int stars = 0;
             for (Level l : bundle.getLevels()) {
-                stars = l.getScore() >= l.getMax() ? 3 : l.getScore() >= l.getMed() ? 2 : l.getScore() >= l.getMin() ? 1 : 0;
+                stars += l.getScore() >= l.getMax() ? 3 : l.getScore() >= l.getMed() ? 2 : l.getScore() >= l.getMin() ? 1 : 0;
             }
             bundle.setCollected(stars);
             LevelChooser.DATA.insert(bundle, false, LevelChooser.DATA.get());

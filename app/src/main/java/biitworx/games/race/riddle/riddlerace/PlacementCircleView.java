@@ -75,7 +75,7 @@ public class PlacementCircleView extends View {
         hiter.clear();
         Rect outer=canvas.getClipBounds();
         int seed=outer.width()/40;
-        Rect inner = new Rect(outer.left+seed,outer.top+seed,outer.right-seed,outer.bottom-seed);
+        Rect inner = outer;//new Rect(outer.left+seed,outer.top+seed,outer.right-seed,outer.bottom-seed);
 
         canvas.drawRect(inner, back);
 
