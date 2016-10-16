@@ -3,7 +3,6 @@ package biitworx.games.race.riddle.riddlerace;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RadialGradient;
@@ -20,9 +19,8 @@ import java.util.List;
 import java.util.Map;
 
 import biitworx.games.race.riddle.riddlerace.data.helper.poco.Level;
+import biitworx.games.race.riddle.riddlerace.data.helper.poco.LevelSet;
 import biitworx.games.race.riddle.riddlerace.data.helper.poco.Levels;
-import biitworx.games.race.riddle.riddlerace.levels.basic.bundle.Bundles;
-import biitworx.games.race.riddle.riddlerace.levels.basic.bundle.LevelBundle;
 
 /**
  * Created by marcel.weissgerber on 13.10.2016.
@@ -31,7 +29,7 @@ import biitworx.games.race.riddle.riddlerace.levels.basic.bundle.LevelBundle;
 public class LevelView extends View {
     private Paint back = new Paint();
     public String name = "";
-    LevelBundle bundle;
+    LevelSet set;
     public LevelChooser instance;
 
     public int greenLight = Color.argb(255, 100, 175, 130);
@@ -52,7 +50,7 @@ public class LevelView extends View {
 
         name = attrs.getAttributeValue(null, "name");
 
-        bundle = Bundles.get(name);
+        set = Levels.getSet(name);
     }
 
     @Override
@@ -61,17 +59,28 @@ public class LevelView extends View {
         all.clear();
         Rect inner = canvas.getClipBounds();
         canvas.drawRect(inner, back);
-        int seed = 0;
+        int seed = inner.height() / 20;
+        Rect topper = new Rect(inner.left, inner.top, inner.right, inner.top + inner.height() / 10);
 
-        int lv = 3;
+        Paint tp = new Paint();
+        tp.setStyle(Paint.Style.FILL_AND_STROKE);
+        tp.setTextSize(topper.height() / 3);
+        tp.setColor(Color.argb(255, 50, 50, 50));
+        tp.setFakeBoldText(true);
+        String nn = name + " - Stars: " + String.valueOf(set.getCollected()) + " / " + String.valueOf(set.getStars());
+        float tw = tp.measureText(nn);
+
+        canvas.drawText(nn, topper.centerX() - tw / 2, topper.centerY()-tw/16, tp);
+
+        int lv = 4;
         int w = inner.width() / lv;
         int top = inner.top + seed;
         int index = 0;
-        if (bundle != null) {
-            for (LevelBundle.InternalLevel item : bundle.getLevels()) {
+        if (set != null) {
+            for (Level item : set.getLevels()) {
 
                 Rect rc = new Rect(inner.left + (w * index), top, inner.left + (w * (index + 1)), top + w);
-                drawTile(canvas, item.name, item.aClass, rc);
+                drawTile(canvas, item.getName(), rc);
                 index++;
                 if (index == lv) {
                     index = 0;
@@ -81,12 +90,12 @@ public class LevelView extends View {
         }
     }
 
-    private void drawTile(Canvas canvas, String name, Class clazz, Rect inner) {
+    private void drawTile(Canvas canvas, String name, Rect inner) {
 
         Level level = Levels.getLevel(name);
+        int aa = 12;
 
-
-        RectF inner2 = new RectF(inner.left + inner.width() / 10, inner.top + inner.width() / 10, inner.right - inner.width() / 10, inner.bottom - inner.width() / 10);
+        RectF inner2 = new RectF(inner.left + inner.width() / aa, inner.top + inner.width() / aa, inner.right - inner.width() / aa, inner.bottom - inner.width() / aa);
         RectF inner3 = new RectF(inner.left + inner.width() / 20, inner.top + inner.width() / 20, inner.right - inner.width() / 20, inner.bottom - inner.width() / 20);
 
         boolean bAdd = false;
@@ -107,7 +116,7 @@ public class LevelView extends View {
         }
         all.add(level);
         Game g = new Game();
-        g.aClass = clazz;
+
         g.level = level;
         g.name = name;
         Paint tileBack = new Paint();
@@ -244,14 +253,14 @@ public class LevelView extends View {
         if (event.getAction() == MotionEvent.ACTION_DOWN && instance != null) {
             for (Map.Entry<RectF, Game> item : games.entrySet()) {
                 if (item.getKey().contains(event.getX(), event.getY()))
-                    instance.openActivity(item.getValue().aClass, item.getValue().level);
+                    instance.openActivity(item.getValue().level);
             }
         }
         return false;
     }
 
     public class Game {
-        public Class aClass;
+
         public String name;
         public Level level;
     }

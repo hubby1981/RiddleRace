@@ -12,7 +12,7 @@
 
     <biitworx.games.race.riddle.riddlerace.LevelView
         android:id="@+id/view"
-        name="basic"
+        name="Basic"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
 

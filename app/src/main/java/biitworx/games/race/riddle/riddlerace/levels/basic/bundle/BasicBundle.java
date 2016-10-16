@@ -11,19 +11,8 @@ import biitworx.games.race.riddle.riddlerace.levels.basic.*;
  * Created by marcel.weissgerber on 13.10.2016.
  */
 
-public class BasicBundle extends LevelBundle {
-    @Override
-    protected void initBundle() {
-        add(TE.get(R.string.bundle_basic_level_1), LevelPlay.class);
-        add(TE.get(R.string.bundle_basic_level_2), LevelPlay.class);
-        add(TE.get(R.string.bundle_basic_level_3), LevelPlay.class);
-        add(TE.get(R.string.bundle_basic_level_4), LevelPlay.class);
-        add(TE.get(R.string.bundle_basic_level_5), LevelPlay.class);
-        add(TE.get(R.string.bundle_basic_level_6), LevelPlay.class);
-        add(TE.get(R.string.bundle_basic_level_7), LevelPlay.class);
+public class BasicBundle {
 
-
-    }
 
     public static Level setupLevel1(){
         Level level = new Level(TE.get(R.string.bundle_basic_level_1),30,40,50,TE.get(R.string.bundle_basic_level_2));
@@ -93,7 +82,7 @@ public class BasicBundle extends LevelBundle {
     }
     public static Level setupLevel3(){
 
-        Level level = new Level(TE.get(R.string.bundle_basic_level_3),50 ,6,70,TE.get(R.string.bundle_basic_level_4));
+        Level level = new Level(TE.get(R.string.bundle_basic_level_3),50 ,60,70,TE.get(R.string.bundle_basic_level_4));
         level.add(new Circle(     50,
                 200,
                 100,

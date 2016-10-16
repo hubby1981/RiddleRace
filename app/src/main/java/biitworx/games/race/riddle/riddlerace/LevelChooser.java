@@ -16,6 +16,7 @@ import java.util.TimerTask;
 
 import biitworx.games.race.riddle.riddlerace.data.helper.DbHelper;
 import biitworx.games.race.riddle.riddlerace.data.helper.poco.Level;
+import biitworx.games.race.riddle.riddlerace.levels.basic.LevelPlay;
 
 
 public class LevelChooser extends AppCompatActivity {
@@ -60,8 +61,8 @@ public class LevelChooser extends AppCompatActivity {
         }, 1000, 250);
     }
 
-    public void openActivity(Class clazz, Level levelItem) {
-        Intent level = new Intent(this, clazz);
+    public void openActivity(Level levelItem) {
+        Intent level = new Intent(this, LevelPlay.class);
         this.levelItem = levelItem;
         startActivity(level);
     }

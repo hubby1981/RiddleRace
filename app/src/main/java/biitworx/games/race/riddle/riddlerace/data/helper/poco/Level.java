@@ -3,6 +3,7 @@ package biitworx.games.race.riddle.riddlerace.data.helper.poco;
 import java.util.ArrayList;
 import java.util.List;
 
+import biitworx.games.race.riddle.riddlerace.LevelChooser;
 import biitworx.games.race.riddle.riddlerace.data.helper.BaseDataObject;
 import biitworx.games.race.riddle.riddlerace.data.helper.DbField;
 import biitworx.games.race.riddle.riddlerace.data.helper.DbReference;
@@ -56,7 +57,9 @@ public class Level extends BaseDataObject {
 
     @Override
     protected void imported() {
+        if(circles.size()==0){
 
+        }
     }
 
     public int getScore() {

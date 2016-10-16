@@ -1,19 +1,11 @@
 package biitworx.games.race.riddle.riddlerace;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Picture;
 import android.graphics.Rect;
-import android.hardware.Camera;
-import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -24,8 +16,6 @@ import java.util.Map;
 
 import biitworx.games.race.riddle.riddlerace.data.helper.poco.Level;
 import biitworx.games.race.riddle.riddlerace.data.helper.poco.Levels;
-import biitworx.games.race.riddle.riddlerace.levels.basic.bundle.Bundles;
-import biitworx.games.race.riddle.riddlerace.levels.basic.bundle.LevelBundle;
 
 /**
  * Created by marce_000 on 10.10.2016.
@@ -51,7 +41,7 @@ public class PlacementCircleView extends View {
     public Level level;
     public CrashedView crashedView = new CrashedView();
 
-    public PlacementCircleView(Context context,String name) {
+    public PlacementCircleView(Context context, String name) {
         super(context);
         circleLine.setStyle(Paint.Style.STROKE);
         circleLine.setAntiAlias(true);
@@ -73,7 +63,7 @@ public class PlacementCircleView extends View {
 
     public void onDraw(Canvas canvas) {
         if (crashed) {
-            if (rounds >=level.getMin()) {
+            if (rounds >= level.getMin()) {
                 back.setColor(Color.argb(255, 220, 255, 220));
 
             } else {
@@ -83,7 +73,9 @@ public class PlacementCircleView extends View {
         }
         mCanvas = canvas;
         hiter.clear();
-        Rect inner = canvas.getClipBounds();
+        Rect outer=canvas.getClipBounds();
+        int seed=outer.width()/40;
+        Rect inner = new Rect(outer.left+seed,outer.top+seed,outer.right-seed,outer.bottom-seed);
 
         canvas.drawRect(inner, back);
 
@@ -311,7 +303,7 @@ public class PlacementCircleView extends View {
                         if (level.getScore() >= level.getMin()) {
                             Level next = Levels.getLevel(level.getNext());
                             if (next != null) {
-                                LevelChooser.that.openActivity(Bundles.getByName(next.getName()),next);
+                                LevelChooser.that.openActivity(next);
                             }
                         } else {
                             retryIt();
@@ -334,10 +326,6 @@ public class PlacementCircleView extends View {
     }
 
     private void retryIt() {
-        Class bb = Bundles.getByName(name);
-        if (bb != null) {
-            LevelChooser.that.openActivity(bb, level);
-
-        }
+        LevelChooser.that.openActivity(level);
     }
 }

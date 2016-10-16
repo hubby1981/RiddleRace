@@ -15,4 +15,7 @@
     <string name="bundle_basic_level_8">Level VIII - Happy</string>
     <string name="bundle_basic_level_9">Level IX - Tornado</string>
     <string name="bundle_basic_level_10">Level X - Coffee</string>
+
+    <string name="bundle_basic">Basic</string>
+
 </resources>
