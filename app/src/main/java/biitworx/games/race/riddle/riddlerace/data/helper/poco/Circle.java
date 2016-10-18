@@ -7,52 +7,56 @@ import biitworx.games.race.riddle.riddlerace.data.helper.DbTable;
 /**
  * Created by marcel.weissgerber on 14.10.2016.
  */
-@DbTable(name="circle")
+@DbTable(name = "circle")
 public class Circle extends BaseDataObject {
-    @DbField(name="red")
+    @DbField(name = "red")
     private int red;
-    @DbField(name="green")
+    @DbField(name = "green")
     private int green;
-    @DbField(name="blue")
+    @DbField(name = "blue")
     private int blue;
-    @DbField(name="mover")
+    @DbField(name = "mover")
     private int mover;
-    @DbField(name="posx")
+    @DbField(name = "posx")
     private int posx;
-    @DbField(name="posy")
+    @DbField(name = "posy")
     private int posy;
-    @DbField(name="direction")
+    @DbField(name = "direction")
     private int direction;
-    @DbField(name="length")
+    @DbField(name = "length")
     private int length;
-    @DbField(name="inverse")
+    @DbField(name = "inverse")
     private int inverse;
-    @DbField(name="position")
+    @DbField(name = "position")
     private int position;
-    @DbField(name="next")
+    @DbField(name = "next")
     private int next;
+    @DbField(name = "faktor")
+    private int faktor;
+
     @Override
     protected void imported() {
 
     }
 
-    public Circle(){
+    public Circle() {
 
     }
 
 
-    public Circle(int red,int green,int blue,int speed,int positionx,int positiony,int direction,int length,int inverse,int position,int next){
-        this.red=red;
-        this.green=green;
-        this.blue=blue;
-        this.mover=speed;
-        this.posx=positionx;
-        this.posy=positiony;
-        this.direction=direction;
-        this.length=length;
-        this.inverse=inverse;
-        this.position=position;
-        this.next=next;
+    public Circle(int red, int green, int blue, int speed, int positionx, int positiony, int direction, int length, int inverse, int position, int next, int faktor) {
+        this.red = red;
+        this.green = green;
+        this.blue = blue;
+        this.mover = speed;
+        this.posx = positionx;
+        this.posy = positiony;
+        this.direction = direction;
+        this.length = length;
+        this.inverse = inverse;
+        this.position = position;
+        this.next = next;
+        this.faktor = faktor;
     }
 
     public int getRed() {
@@ -97,5 +101,33 @@ public class Circle extends BaseDataObject {
 
     public int getNext() {
         return next;
+    }
+
+    public int getFaktor() {
+        return faktor;
+    }
+
+    public void setMover(int mover) {
+        this.mover = mover;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public void setInverse(int inverse) {
+        this.inverse = inverse;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    public void setNext(int next) {
+        this.next = next;
+    }
+
+    public void setFaktor(int faktor) {
+        this.faktor = faktor;
     }
 }

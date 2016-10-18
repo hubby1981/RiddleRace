@@ -34,12 +34,11 @@ public class CircleView {
     public int inverse = 0;
     public boolean rr = false;
     public boolean crashed = false;
+public boolean simulate=false;
+    private int fak = 2;
 
 
-
-
-
-    public CircleView(PlacementCircleView view ,int red,int green,int blue,int speed,int positionx,int positiony,int direction,int length,int inverse,int position,int next){
+    public CircleView(PlacementCircleView view, int red, int green, int blue, int speed, int positionx, int positiony, int direction, int length, int inverse, int position, int next, int faktor) {
 
         carLine.setStyle(Paint.Style.FILL);
         carLine.setAntiAlias(true);
@@ -48,24 +47,30 @@ public class CircleView {
         carLine2.setAntiAlias(true);
         carLine2.setColor(Color.argb(128, 50, 50, 50));
         carLine2.setStrokeWidth(1);
+        if (faktor < 3)
+            faktor = 3;
 
-
-        this.red=red;
-        this.green=green;
-        this.blue=blue;
-        this.mover=speed;
-        this.posx=positionx;
-        this.posy=positiony;
-        this.direction=direction;
-        this.length=length;
-        this.inverse=inverse;
-        this.position=position;
-        this.ccNext=next;
+        this.red = red;
+        this.green = green;
+        this.blue = blue;
+        this.mover = speed;
+        this.posx = positionx;
+        this.posy = positiony;
+        this.direction = direction;
+        this.length = length;
+        this.inverse = inverse;
+        this.position = position;
+        this.ccNext = next;
+        this.fak = faktor;
     }
 
 
-    public void drawMe(Canvas canvas) {
+    public void drawMe(Canvas canvas, int count) {
         Rect rc = canvas.getClipBounds();
+
+        int seed = rc.width() / 40;
+
+        rc = new Rect(rc.left + seed * fak, rc.top + seed * fak, rc.right - seed * fak, rc.bottom - seed * fak);
         PlacementCircleView.line(this, rc);
         int color = 200;
         if (hit) {
@@ -142,20 +147,20 @@ public class CircleView {
                 rc.bottom + (int) ((distance) * rad));
 
         int p = position;
+        if (count == 0) {
+            for (int i = 0; i < length; i++) {
+                Rect rc1 = drawWithDegree(p, distance2, rc2);
 
-        for (int i = 0; i < length; i++) {
-            Rect rc1 = drawWithDegree(p, distance2, rc2);
+                if (!crashed)
+                    canvas.drawCircle(rc1.centerX(), rc1.centerY(), rc1.height() / 1.85f, carLine);
 
-            if (!crashed)
-                canvas.drawCircle(rc1.centerX(), rc1.centerY(), rc1.height() / 1.85f, carLine);
+                //canvas.drawCircle(rc1.centerX(), rc1.centerY(), rc1.height() / 1.85f, carLine2);
 
-            //canvas.drawCircle(rc1.centerX(), rc1.centerY(), rc1.height() / 1.85f, carLine2);
+                PlacementCircleView.circle(this, rc1);
 
-            PlacementCircleView.circle(this, rc1);
-
-            p -= 5f;
+                p -= 5f;
+            }
         }
-
 
     }
 
@@ -190,10 +195,11 @@ public class CircleView {
         }
         if (inverse == 0) {
             if (position > 360) {
+
                 round++;
                 rr = true;
                 position = 0;
-                if (length < ccNext*3 && count > ccNext) {
+                if (length < ccNext * 3 && count > ccNext &&!simulate) {
                     length += 1;
                     count = 1;
                     mover += 0.25f;
@@ -207,7 +213,7 @@ public class CircleView {
                 round++;
                 rr = true;
                 position = 360;
-                if (length < ccNext*3 && count > ccNext) {
+                if (length < ccNext * 3 && count > ccNext&&!simulate) {
                     length += 1;
                     count = 1;
                     mover += 0.25f;
@@ -215,6 +221,15 @@ public class CircleView {
                 PlacementCircleView.rounds++;
 
                 count++;
+            }
+        }
+
+        if(simulate){
+            if(round>99){
+                round=99;
+            }
+            if( PlacementCircleView.rounds>99){
+                PlacementCircleView.rounds=99;
             }
         }
 

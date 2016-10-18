@@ -1,15 +1,8 @@
 package biitworx.games.race.riddle.riddlerace;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.PermissionGroupInfo;
-import android.content.res.Resources;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -21,24 +14,13 @@ import biitworx.games.race.riddle.riddlerace.levels.basic.LevelPlay;
 
 public class LevelChooser extends AppCompatActivity {
 
-    public static DbHelper DATA;
-
-    public static Resources res;
-
     private Timer time;
     private Runnable update;
-
-    public static Level levelItem;
-
-    public static LevelChooser that;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        that = this;
-        DATA = new DbHelper(this);
-        res = getResources();
+        MainMenu.that = this;
         setContentView(R.layout.activity_level_chooser);
         LevelView view = (LevelView) findViewById(R.id.view);
         view.instance = this;
@@ -63,7 +45,7 @@ public class LevelChooser extends AppCompatActivity {
 
     public void openActivity(Level levelItem) {
         Intent level = new Intent(this, LevelPlay.class);
-        this.levelItem = levelItem;
+        MainMenu.levelItem = levelItem;
         startActivity(level);
     }
 

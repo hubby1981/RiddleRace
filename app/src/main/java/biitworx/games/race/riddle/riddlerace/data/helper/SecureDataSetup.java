@@ -7,8 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import biitworx.games.race.riddle.riddlerace.LevelChooser;
-import biitworx.games.race.riddle.riddlerace.data.helper.poco.Level;
+import biitworx.games.race.riddle.riddlerace.MainMenu;
 
 
 /**
@@ -29,7 +28,7 @@ public class SecureDataSetup {
     public HashMap<String, List<Object>> getAll(SQLiteDatabase db) {
         HashMap<String, List<Object>> all = new HashMap<>();
         for (Class c : secureDataList) {
-            all.put(c.getSimpleName(), LevelChooser.DATA.getData(c, db, true));
+            all.put(c.getSimpleName(), MainMenu.DATA.getData(c, db, true));
         }
         return all;
     }
@@ -37,7 +36,7 @@ public class SecureDataSetup {
     public void reInsertData(HashMap<String, List<Object>> all, SQLiteDatabase db) {
         for (Map.Entry<String, List<Object>> e : all.entrySet()) {
             for (Object o : e.getValue()) {
-                LevelChooser.DATA.insert(o, true, db);
+                MainMenu.DATA.insert(o, true, db);
             }
         }
     }

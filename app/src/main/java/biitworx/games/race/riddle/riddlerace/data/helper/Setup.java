@@ -6,6 +6,7 @@ import java.util.List;
 import biitworx.games.race.riddle.riddlerace.data.helper.poco.Circle;
 import biitworx.games.race.riddle.riddlerace.data.helper.poco.Level;
 import biitworx.games.race.riddle.riddlerace.data.helper.poco.LevelSet;
+import biitworx.games.race.riddle.riddlerace.data.helper.poco.User;
 
 /**
  * Created by marcel.weissgerber on 09.05.2016.
@@ -22,6 +23,7 @@ public class Setup {
         tables.add(Level.class);
         tables.add(Circle.class);
         tables.add(LevelSet.class);
+        tables.add(User.class);
 
     }
 

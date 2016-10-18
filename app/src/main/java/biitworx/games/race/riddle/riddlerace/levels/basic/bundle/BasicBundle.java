@@ -26,7 +26,8 @@ public class BasicBundle {
                 1,
                 1,
                 270,
-                5));
+                5,
+                2));
         level.add(new Circle( 220,
                 90,
                 90,
@@ -37,7 +38,8 @@ public class BasicBundle {
                 1,
                 0,
                 270,
-                10));
+                10,
+                2));
 
         return level;
     }
@@ -55,7 +57,8 @@ public class BasicBundle {
                 1,
                 1,
                 270,
-                20));
+                20,
+                2));
         level.add(new Circle( 220,
                 90,
                 90,
@@ -66,7 +69,8 @@ public class BasicBundle {
                 1,
                 0,
                 90,
-                20));
+                20,
+                2));
         level.add(new Circle(  90,
                 170,
                 220,
@@ -77,7 +81,8 @@ public class BasicBundle {
                 1,
                 0,
                 0,
-                20));
+                20,
+                2));
         return level;
     }
     public static Level setupLevel3(){
@@ -93,29 +98,32 @@ public class BasicBundle {
                 1,
                 1,
                 270,
-                20));
+                20,
+                2));
         level.add(new Circle(  220,
                 90,
                 90,
-                2,
+                5,
                 10,
                 10,
                 0,
                 1,
                 0,
                 90,
-                20));
+                20,
+                2));
         level.add(new Circle(  90,
                 170,
                 220,
-                2,
+                3,
                 0,
                 0,
                 1,
                 1,
                 0,
                 0,
-                20));
+                20,
+                2));
         return level;
     }
     public static Level setupLevel5(){
@@ -132,7 +140,8 @@ public class BasicBundle {
                 1,
                 1,
                 270,
-                20));
+                20,
+                2));
         level.add(new Circle(      220,
                 90,
                 90,
@@ -143,7 +152,8 @@ public class BasicBundle {
                 1,
                 0,
                 90,
-                20));
+                20,
+                2));
         level.add(new Circle(      90,
                 170,
                 220,
@@ -154,7 +164,8 @@ public class BasicBundle {
                 1,
                 0,
                 0,
-                20));
+                20,
+                2));
         level.add(new Circle(         240,
                 70,
                 240,
@@ -165,7 +176,8 @@ public class BasicBundle {
                 1,
                 0,
                 0,
-                20));
+                20,
+                2));
         return level;
     }
     public static Level setupLevel6(){
@@ -181,7 +193,8 @@ public class BasicBundle {
                 1,
                 1,
                 270,
-                20));
+                20,
+                2));
         level.add(new Circle(       220,
                 90,
                 90,
@@ -192,7 +205,8 @@ public class BasicBundle {
                 1,
                 0,
                 90,
-                20));
+                20,
+                2));
         level.add(new Circle(  90,
                 170,
                 220,
@@ -203,7 +217,8 @@ public class BasicBundle {
                 1,
                 0,
                 0,
-                20));
+                20,
+                2));
         level.add(new Circle(  240,
                 70,
                 240,
@@ -214,7 +229,8 @@ public class BasicBundle {
                 1,
                 0,
                 0,
-                20));
+                20,
+                2));
         return level;
     }
     public static Level setupLevel7(){
@@ -230,7 +246,8 @@ public class BasicBundle {
                 1,
                 1,
                 270,
-                20));
+                20,
+                2));
         level.add(new Circle(         220,
                 90,
                 90,
@@ -241,7 +258,8 @@ public class BasicBundle {
                 1,
                 0,
                 90,
-                20));
+                20,
+                2));
         level.add(new Circle(    90,
                 170,
                 220,
@@ -252,7 +270,8 @@ public class BasicBundle {
                 1,
                 0,
                 0,
-                20));
+                20,
+                2));
         level.add(new Circle(   240,
                 70,
                 240,
@@ -263,7 +282,8 @@ public class BasicBundle {
                 1,
                 0,
                 0,
-                20));
+                20,
+                2));
         level.add(new Circle(    240,
                 200,
                 80,
@@ -274,7 +294,8 @@ public class BasicBundle {
                 1,
                 0,
                 0,
-                20));
+                20,
+                2));
         return level;
     }
     public static Level setupLevel4(){
@@ -291,7 +312,8 @@ public class BasicBundle {
                 1,
                 1,
                 270,
-                20));
+                20,
+                2));
         level.add(new Circle(   220,
                 90,
                 90,
@@ -302,10 +324,11 @@ public class BasicBundle {
                 1,
                 0,
                 90,
-                20));
-        level.add(new Circle(     90,
-                170,
+                20,
+                2));
+        level.add(new Circle(     220,
                 220,
+                40,
                 2,
                 0,
                 0,
@@ -313,7 +336,8 @@ public class BasicBundle {
                 1,
                 0,
                 0,
-                20));
+                20,
+                2));
         return level;
     }
 }

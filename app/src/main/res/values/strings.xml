@@ -6,16 +6,53 @@
     <string name="bundle_basic_level_1">Level I - Rings</string>
     <string name="bundle_basic_level_2">Level II - Hazard</string>
     <string name="bundle_basic_level_3">Level III - Magic</string>
-
     <string name="bundle_basic_level_4">Level IV - Snowy</string>
     <string name="bundle_basic_level_5">Level V - Bongo Time</string>
     <string name="bundle_basic_level_6">Level VI - Easy</string>
-
     <string name="bundle_basic_level_7">Level VII - Tree</string>
     <string name="bundle_basic_level_8">Level VIII - Happy</string>
     <string name="bundle_basic_level_9">Level IX - Tornado</string>
     <string name="bundle_basic_level_10">Level X - Coffee</string>
+    <string name="bundle_basic_level_11">Level XI - Sandman</string>
+    <string name="bundle_basic_level_12">Level XII - Circus</string>
 
     <string name="bundle_basic">Basic</string>
+
+    <string name="resource_menu_back">Back to Menu</string>
+    <string name="resource_menu_next">Next Set</string>
+
+
+    <string name="resource_crash_head1">Your riddles crashed!</string>
+    <string name="resource_crash_bottom1">Try it again, Tiger!</string>
+    <string name="resource_crash_bottom2">Awesome you beat the level!</string>
+
+    <string name="menu_play">Play Game</string>
+    <string name="menu_options">Options</string>
+    <string name="menu_tutorial">Tutorial</string>
+    <string name="menu_shop">Shop</string>
+    <string name="menu_close">Exit Game</string>
+    <string name="menu_editor">Level Editor</string>
+
+    <string name="menu_editor_board">Board</string>
+    <string name="menu_editor_properties">Properties</string>
+    <string name="menu_editor_preview">Preview</string>
+
+
+    <string name="menu_editor_delete">Undo</string>
+    <string name="menu_editor_save">Save</string>
+    <string name="menu_editor_back">Back</string>
+
+
+    <string name="editor_value_color">Color:</string>
+    <string name="editor_value_speed">Speed:</string>
+    <string name="editor_value_inverse">Inverse:</string>
+    <string name="editor_value_postion">Degree:</string>
+    <string name="editor_value_length">Length:</string>
+    <string name="editor_value_next">Faster:</string>
+
+    <string name="editor_level_name">Name:</string>
+    <string name="editor_level_min">Minimum:</string>
+    <string name="editor_level_med">Medium:</string>
+    <string name="editor_level_max">Maximum:</string>
 
 </resources>

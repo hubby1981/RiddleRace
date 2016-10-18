@@ -26,8 +26,8 @@ public class Level extends BaseDataObject {
     private int score = 0;
     @DbField(name = "next")
     private String next = "";
-    @DbReference(items=Circle.class)
-    private List<Circle> circles=new ArrayList<>();
+    @DbReference(items = Circle.class)
+    private List<Circle> circles = new ArrayList<>();
 
     public Level(String name, int min, int med, int max) {
         this.name = name;
@@ -46,7 +46,7 @@ public class Level extends BaseDataObject {
 
     }
 
-    public Level add(Circle circle){
+    public Level add(Circle circle) {
         circles.add(circle);
         return this;
     }
@@ -57,7 +57,7 @@ public class Level extends BaseDataObject {
 
     @Override
     protected void imported() {
-        if(circles.size()==0){
+        if (circles.size() == 0) {
 
         }
     }
@@ -68,6 +68,9 @@ public class Level extends BaseDataObject {
 
     public String getName() {
         return name;
+    }
+    public void setName(String name){
+        this.name=name;
     }
 
     public int getMax() {
@@ -80,6 +83,18 @@ public class Level extends BaseDataObject {
 
     public int getMin() {
         return min;
+    }
+
+    public void setMax(int max) {
+        this.max = max;
+    }
+
+    public void setMed(int med) {
+        this.med = med;
+    }
+
+    public void setMin(int min) {
+        this.min = min;
     }
 
     public List<Circle> getCircles() {

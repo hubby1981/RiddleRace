@@ -10,6 +10,8 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
+import biitworx.games.race.riddle.riddlerace.data.helper.poco.Level;
+
 /**
  * Created by marcel.weissgerber on 13.10.2016.
  */
@@ -20,28 +22,29 @@ public class CrashedView {
     private int colorRed = Color.argb(255, 250, 100, 100);
     private int colorBlue = Color.argb(255, 80, 160, 200);
     private int colorRedLight = Color.argb(138, 250, 100, 100);
+    private int colorGreenLight = Color.argb(138, 100, 250, 100);
+
     Rect retry = null;
     Rect abort = null;
     Rect next = null;
 
-    String crash1 = "Your riddles crashed!";
-    String crash2 = "You should try it again!";
+    String crash1;
+    String crash2;
     String t1 = "Retry";
     String t2 = "Abort";
     String t3 = "Next";
 
     Paint text = new Paint();
 
-    public void onDraw(Canvas canvas) {
+    public void onDraw(Canvas canvas,Level level,Rect inner) {
 
-        Rect inner = canvas.getClipBounds();
-        inner = new Rect(inner.left, inner.centerY() - inner.height() / 8, inner.right, inner.centerY() + inner.height() / 8);
-
+        crash1 = TE.get(R.string.resource_crash_head1);
         Paint back = new Paint();
         back.setStyle(Paint.Style.FILL);
 
-        back.setColor(Color.argb(140, 255, 255, 255));
-        canvas.drawRect(canvas.getClipBounds(), back);
+        back.setColor(Color.argb(128, 255, 255, 255));
+        canvas.drawRect(inner, back);
+        inner = new Rect(inner.left, inner.centerY() - inner.height() / 8, inner.right, inner.centerY() + inner.height() / 8);
 
         Rect line1 = new Rect(inner.left, inner.top - inner.height() / 4, inner.right, inner.top);
         Rect line2 = new Rect(inner.left, inner.bottom, inner.right, inner.bottom + inner.height() / 4);
@@ -58,13 +61,14 @@ public class CrashedView {
         canvas.drawCircle(retry1.exactCenterX(), retry1.exactCenterY(), retry1.width() / 2, back);
 
         back.setTextSize(retry1.height() / 4);
+        back.setFakeBoldText(true);
         float wt = back.measureText(t1);
         canvas.drawText(t1, retry1.exactCenterX() - wt / 2, retry1.bottom, back);
 
         back.setColor(colorRed);
 
         canvas.drawRoundRect(new RectF(abort1.exactCenterX() - abort1.width() / 2, abort1.exactCenterY() - abort1.height() / 5, abort1.exactCenterX() + abort1.width() / 2, abort1.exactCenterY() + abort1.height() / 5)
-                , abort1.width() / 10, abort1.height() / 10, back);
+                , abort1.width() / 5, abort1.width() / 5, back);
         wt = back.measureText(t2);
         canvas.drawText(t2, abort1.exactCenterX() - wt / 2, abort1.bottom, back);
         back.setColor(colorBlue);
@@ -80,15 +84,18 @@ public class CrashedView {
         canvas.drawText(t3, next1.exactCenterX() - wt / 4, next1.bottom, back);
 
 
-        back.setColor(colorRedLight);
+        back.setColor(level.getScore()>= level.getMin()?colorGreenLight:colorRedLight);
         canvas.drawRect(line1, back);
         canvas.drawRect(line2, back);
 
         text.setStyle(Paint.Style.FILL);
         text.setTextSize(inner.height() / 6);
-        text.setColor(colorRedLight);
+        text.setFakeBoldText(true);
+        text.setAntiAlias(true);
+        text.setColor(level.getScore()>= level.getMin()?colorGreen:colorRed);
         float w = text.measureText(crash1);
         canvas.drawText(crash1, line1.centerX() - w / 2, line1.top - line1.height() / 2, text);
+        crash2 = TE.get(level.getScore()>= level.getMin()?R.string.resource_crash_bottom2:R.string.resource_crash_bottom1);
 
         w = text.measureText(crash2);
         canvas.drawText(crash2, line2.centerX() - w / 2, line2.bottom + line2.height(), text);

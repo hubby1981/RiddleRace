@@ -3,7 +3,7 @@ package biitworx.games.race.riddle.riddlerace.data.helper.poco;
 import java.util.ArrayList;
 import java.util.List;
 
-import biitworx.games.race.riddle.riddlerace.LevelChooser;
+import biitworx.games.race.riddle.riddlerace.MainMenu;
 import biitworx.games.race.riddle.riddlerace.R;
 import biitworx.games.race.riddle.riddlerace.TE;
 import biitworx.games.race.riddle.riddlerace.levels.basic.bundle.BasicBundle;
@@ -17,7 +17,7 @@ public class Levels {
     private static List<LevelSet> sets = new ArrayList<>();
 
     static {
-        sets = LevelChooser.DATA.getData(LevelSet.class, LevelChooser.DATA.get(), true);
+        sets = MainMenu.DATA.getData(LevelSet.class, MainMenu.DATA.get(), true);
         if (sets == null || sets.size() == 0) {
             setupSets();
         }
@@ -48,9 +48,9 @@ public class Levels {
     }
 
 
-    public static void updateLevel(Level level) {
+    public static void updateLevel(Level level,boolean insert) {
 
-        LevelChooser.DATA.insert(level, false, LevelChooser.DATA.get());
+        MainMenu.DATA.insert(level, insert, MainMenu.DATA.get());
 
         LevelSet bundle = null;
         for (LevelSet b : sets) {
@@ -64,7 +64,7 @@ public class Levels {
                 stars += l.getScore() >= l.getMax() ? 3 : l.getScore() >= l.getMed() ? 2 : l.getScore() >= l.getMin() ? 1 : 0;
             }
             bundle.setCollected(stars);
-            LevelChooser.DATA.insert(bundle, false, LevelChooser.DATA.get());
+            MainMenu.DATA.insert(bundle, false, MainMenu.DATA.get());
 
         }
 
@@ -76,19 +76,20 @@ public class Levels {
 
     private static LevelSet setupBasicSet() {
         LevelSet result = new LevelSet(TE.get(R.string.bundle_basic), 40);
-        result.add(BasicBundle.setupLevel1());
+        /*result.add(BasicBundle.setupLevel1());
         result.add(BasicBundle.setupLevel2());
         result.add(BasicBundle.setupLevel3());
         result.add(BasicBundle.setupLevel4());
         result.add(BasicBundle.setupLevel5());
         result.add(BasicBundle.setupLevel6());
-        result.add(BasicBundle.setupLevel7());
+        result.add(BasicBundle.setupLevel7());*/
+
 
 
         for (Level l : result.getLevels())
-            LevelChooser.DATA.insert(l, true, LevelChooser.DATA.get());
+            MainMenu.DATA.insert(l, true, MainMenu.DATA.get());
 
-        LevelChooser.DATA.insert(result, true, LevelChooser.DATA.get());
+        MainMenu.DATA.insert(result, true, MainMenu.DATA.get());
 
         return result;
     }

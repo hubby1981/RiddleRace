@@ -18,15 +18,15 @@ import java.util.UUID;
  */
 public class DbHelper extends SQLiteOpenHelper {
     private final static String DBNAME = "arcade.games.biitworx.riddlerace";
-    private final static int version = 28;
-    public static final String SELECT_FROM = "SELECT * FROM ";
-    public static final String SELECT_ROWID = "SELECT last_insert_rowid() AS rowid FROM ";
-    public static final String LIMIT_1 = " LIMIT 1";
-    public static final String DELETE_FROM = "DELETE FROM ";
-    public static final String WHERE_PARENT = " WHERE parent=";
-    public static final String INSERT_INTO = "INSERT INTO ";
-    public static final String PARENT_CHILD_VALUES = " (parent,child) VALUES ";
-    public static final String SELECT_PARENT_CHILD_FROM = "SELECT parent,child FROM ";
+    private final static int version = 46;
+    private static final String SELECT_FROM = "SELECT * FROM ";
+    private static final String SELECT_ROWID = "SELECT last_insert_rowid() AS rowid FROM ";
+    private static final String LIMIT_1 = " LIMIT 1";
+    private static final String DELETE_FROM = "DELETE FROM ";
+    private static final String WHERE_PARENT = " WHERE parent=";
+    private static final String INSERT_INTO = "INSERT INTO ";
+    private static final String PARENT_CHILD_VALUES = " (parent,child) VALUES ";
+    private static final String SELECT_PARENT_CHILD_FROM = "SELECT parent,child FROM ";
 
     public DbHelper(Context context) {
         super(context, DBNAME, null, version);

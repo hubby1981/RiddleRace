@@ -8,6 +8,7 @@ import android.os.Bundle;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ThreadFactory;
 
 import biitworx.games.race.riddle.riddlerace.data.helper.poco.Circle;
 import biitworx.games.race.riddle.riddlerace.data.helper.poco.Level;
@@ -81,8 +82,8 @@ public abstract class MainView extends AppCompatActivity {
     protected abstract void initViews();
 
     protected void findLevel() {
-        level = Levels.getLevel(place.name);
-        place.level=level;
+        level = MainMenu.levelItem;
+        place.level = level;
     }
 
     public void newRun() {
@@ -118,9 +119,18 @@ public abstract class MainView extends AppCompatActivity {
                 if (place.hasHit()) {
                     time.cancel();
                     place.crashed = true;
+
                     if (level != null && level.getScore() < place.rounds) {
-                        level.setScore(place.rounds);
-                        Levels.updateLevel(level);
+                        Runnable r = new Runnable() {
+                            @Override
+                            public void run() {
+                                level.setScore(place.rounds);
+                                Levels.updateLevel(level,false);
+                            }
+                        };
+                        Thread t = new Thread(r);
+                        t.setPriority(Thread.MIN_PRIORITY);
+                        t.start();
                     }
 
 
@@ -146,18 +156,21 @@ public abstract class MainView extends AppCompatActivity {
 
         addPlacement(place);
 
-        for (Circle c : level.getCircles()){
-            place.addAll(new CircleView(place,c.getRed(),c.getGreen(),c.getBlue(),c.getMover(),c.getPosx(),c.getPosy(),c.getDirection(),c.getLength(),c.getInverse(),c.getPosition(),c.getNext()));
+        for (Circle c : level.getCircles()) {
+            place.addAll(new CircleView(place, c.getRed(), c.getGreen(), c.getBlue(), c.getMover(), c.getPosx(), c.getPosy(), c.getDirection(), c.getLength(), c.getInverse(), c.getPosition(), c.getNext(), c.getFaktor()));
         }
-            return place;
+        return place;
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        count = 3;
-        place.start(level);
-        if (time != null) time.cancel();
+        count = 3;place.start(level);
+        if (time != null)
+            time.cancel();
+
+        finish();
 
     }
+
 }

@@ -7,6 +7,6 @@ package biitworx.games.race.riddle.riddlerace;
 public class TE {
 
     public static String get(int id){
-        return LevelChooser.res.getString(id);
+        return MainMenu.res.getString(id);
     }
 }
