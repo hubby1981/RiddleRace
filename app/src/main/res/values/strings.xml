@@ -1,28 +1,14 @@
 <resources>
-    <string name="app_name">RiddleRace</string>
+    <string name="app_name">Riddle Racer</string>
     <string name="title_activity_level1">Level1</string>
-
-
-    <string name="bundle_basic_level_1">Level I - Rings</string>
-    <string name="bundle_basic_level_2">Level II - Hazard</string>
-    <string name="bundle_basic_level_3">Level III - Magic</string>
-    <string name="bundle_basic_level_4">Level IV - Snowy</string>
-    <string name="bundle_basic_level_5">Level V - Bongo Time</string>
-    <string name="bundle_basic_level_6">Level VI - Easy</string>
-    <string name="bundle_basic_level_7">Level VII - Tree</string>
-    <string name="bundle_basic_level_8">Level VIII - Happy</string>
-    <string name="bundle_basic_level_9">Level IX - Tornado</string>
-    <string name="bundle_basic_level_10">Level X - Coffee</string>
-    <string name="bundle_basic_level_11">Level XI - Sandman</string>
-    <string name="bundle_basic_level_12">Level XII - Circus</string>
-
     <string name="bundle_basic">Basic</string>
 
     <string name="resource_menu_back">Back to Menu</string>
-    <string name="resource_menu_next">Next Set</string>
+    <string name="resource_menu_prev">Prev</string>
+    <string name="resource_menu_next">Next</string>
 
 
-    <string name="resource_crash_head1">Your riddles crashed!</string>
+    <string name="resource_crash_head1">Your balls crashed!</string>
     <string name="resource_crash_bottom1">Try it again, Tiger!</string>
     <string name="resource_crash_bottom2">Awesome you beat the level!</string>
 
@@ -32,15 +18,19 @@
     <string name="menu_shop">Shop</string>
     <string name="menu_close">Exit Game</string>
     <string name="menu_editor">Level Editor</string>
+    <string name="menu_editor_plain">Editor: </string>
 
     <string name="menu_editor_board">Board</string>
-    <string name="menu_editor_properties">Properties</string>
+    <string name="menu_editor_properties">Ball</string>
     <string name="menu_editor_preview">Preview</string>
+    <string name="menu_editor_level">Level</string>
 
+    <string name="menu_level_view_title">Collected Stars: </string>
 
     <string name="menu_editor_delete">Undo</string>
     <string name="menu_editor_save">Save</string>
     <string name="menu_editor_back">Back</string>
+    <string name="menu_editor_del">Delete</string>
 
 
     <string name="editor_value_color">Color:</string>
@@ -49,10 +39,19 @@
     <string name="editor_value_postion">Degree:</string>
     <string name="editor_value_length">Length:</string>
     <string name="editor_value_next">Faster:</string>
+    <string name="editor_value_faktor">Faktor:</string>
+    <string name="editor_value_freaky">Freaky:</string>
 
     <string name="editor_level_name">Name:</string>
     <string name="editor_level_min">Minimum:</string>
     <string name="editor_level_med">Medium:</string>
     <string name="editor_level_max">Maximum:</string>
+
+
+    <string name="editor_level_name_std">not set</string>
+
+    <string name="crashed_retry">Retry</string>
+    <string name="crashed_abort">Abort</string>
+    <string name="crashed_next">Next</string>
 
 </resources>

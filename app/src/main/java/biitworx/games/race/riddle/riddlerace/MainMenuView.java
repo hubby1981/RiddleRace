@@ -50,8 +50,8 @@ public class MainMenuView extends View {
         back.setColor(Color.argb(255, 255, 240, 220));
 
         int h = inner.height() / 12;
-        int w = inner.width() / 6;
-        Rect img = new Rect(inner.left + w, inner.top + w / 4, inner.right - w, (int) (inner.top + w / 1.5f) + h * 2);
+        int w = inner.width() / 12;
+        Rect img = new Rect(inner.left + w, inner.top + w / 2, inner.right - w, (int) (inner.top + w / 1.5f) + (int)(h*1.25f) );
         Bitmap logo = B.get(R.drawable.logo);
 
         canvas.drawRect(inner, back);
@@ -62,41 +62,43 @@ public class MainMenuView extends View {
 
         canvas.drawBitmap(logo, new Rect(0, 0, logo.getWidth(), logo.getHeight()), img, null);
 
-        int top = img.bottom + h/2;
+        int top = img.bottom + h / 2;
 
-        setBasic = new RectF(inner.left + w,top, inner.right - w, top+ h );
-        top+=h*1+h/8;
-        tutorial = new RectF(inner.left + w, top, inner.right - w, top+h);
-        top+=h*1+h/8;
+        setBasic = new RectF(inner.left + w, top, inner.right - w, top + h);
+        top += h * 1 + h / 8;
+        editor = new RectF(inner.left + w, top, inner.right - w, top + h);
+        top += h * 1 + h / 8;
 
-        options = new RectF(inner.left + w, top, inner.right - w,top+h);
-        top+=h*1+h/8;
+        options = new RectF(inner.left + w, top, inner.right - w, top + h);
+        top += h * 1 + h / 8;
 
-        shop = new RectF(inner.left + w, top, inner.right - w,top+h);
-        top+=h*1+h/8;
+        shop = new RectF(inner.left + w, top, inner.right - w, top + h);
+        top += h * 1 + h / 8;
 
-        editor = new RectF(inner.left + w, top, inner.right - w,top+h);
-        top+=h*1+h;
+        tutorial = new RectF(inner.left + w, top, inner.right - w, top + h);
+        top += h * 1 + h;
+        top += h * 1 + h;
 
 
-        close = new RectF(inner.left + w, top, inner.right - w,top+h);
 
-        drawButton(canvas, setBasic, TE.get(R.string.menu_play),greenLight, green);
-        drawButton(canvas, tutorial, TE.get(R.string.menu_tutorial),blueLight, blue);
-        drawButton(canvas, options, TE.get(R.string.menu_options),blueLight, blue);
-        drawButton(canvas, shop, TE.get(R.string.menu_shop),blueLight, blue);
-        drawButton(canvas, editor, TE.get(R.string.menu_editor),blueLight, blue);
+        close = new RectF(inner.left + w, top, inner.right - w, top + h);
 
-        drawButton(canvas, close, TE.get(R.string.menu_close),blueLight, blue);
+        drawButton(canvas, setBasic, TE.get(R.string.menu_play), greenLight, green);
+        drawButton(canvas, tutorial, TE.get(R.string.menu_tutorial), blueLight, blue);
+        drawButton(canvas, options, TE.get(R.string.menu_options), blueLight, blue);
+        drawButton(canvas, shop, TE.get(R.string.menu_shop), blueLight, blue);
+        drawButton(canvas, editor, TE.get(R.string.menu_editor), blueLight, blue);
+
+        drawButton(canvas, close, TE.get(R.string.menu_close), blueLight, blue);
 
     }
 
-    private void drawButton(Canvas canvas, RectF rc, String text,int light,int dark) {
+    private void drawButton(Canvas canvas, RectF rc, String text, int light, int dark) {
         Paint button = new Paint();
         button.setStyle(Paint.Style.FILL_AND_STROKE);
         button.setColor(Color.argb(255, 50, 50, 50));
-
-        button.setShader(new RadialGradient(rc.centerX(), rc.centerY(), rc.width(), light,dark, Shader.TileMode.MIRROR));
+        button.setShadowLayer(10, 0, 0, Color.BLACK);
+        button.setShader(new RadialGradient(rc.centerX(), rc.centerY(), rc.width(), light, dark, Shader.TileMode.MIRROR));
         canvas.drawRoundRect(rc, rc.width() / 20, rc.width() / 20, button);
         button.setShader(new BitmapShader(MainMenu.back001, Shader.TileMode.MIRROR, Shader.TileMode.MIRROR));
         canvas.drawRoundRect(rc, rc.width() / 20, rc.width() / 20, button);
@@ -114,7 +116,7 @@ public class MainMenuView extends View {
 
         float tw = button.measureText(text);
 
-        canvas.drawText(text, rc.centerX() - tw / 2, rc.centerY()+tw/14, button);
+        canvas.drawText(text, rc.centerX() - tw / 2, rc.centerY() + tw / 14, button);
     }
 
     @Override
@@ -122,6 +124,7 @@ public class MainMenuView extends View {
 
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             if (setBasic.contains(event.getX(), event.getY())) {
+                MainMenu.edit = false;
 
                 Intent i = new Intent(menu, LevelChooser.class);
                 menu.startActivity(i);
@@ -131,10 +134,14 @@ public class MainMenuView extends View {
 
                 menu.finish();
             }
+            if (tutorial.contains(event.getX(), event.getY())) {
 
+                menu.sendMail();
+            }
             if (editor.contains(event.getX(), event.getY())) {
+                MainMenu.edit = true;
 
-                Intent i = new Intent(menu, LevelEditor.class);
+                Intent i = new Intent(menu, LevelChooser.class);
                 menu.startActivity(i);
             }
         }

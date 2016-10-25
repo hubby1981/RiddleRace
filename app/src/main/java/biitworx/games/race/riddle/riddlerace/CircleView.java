@@ -34,11 +34,12 @@ public class CircleView {
     public int inverse = 0;
     public boolean rr = false;
     public boolean crashed = false;
-public boolean simulate=false;
+    public boolean simulate = false;
     private int fak = 2;
+    private int freaky = 0;
+    private PlacementCircleView view;
 
-
-    public CircleView(PlacementCircleView view, int red, int green, int blue, int speed, int positionx, int positiony, int direction, int length, int inverse, int position, int next, int faktor) {
+    public CircleView(PlacementCircleView view, int red, int green, int blue, int speed, int positionx, int positiony, int direction, int length, int inverse, int position, int next, int faktor, int freaky) {
 
         carLine.setStyle(Paint.Style.FILL);
         carLine.setAntiAlias(true);
@@ -62,6 +63,8 @@ public boolean simulate=false;
         this.position = position;
         this.ccNext = next;
         this.fak = faktor;
+        this.freaky = freaky;
+        this.view = view;
     }
 
 
@@ -71,7 +74,7 @@ public boolean simulate=false;
         int seed = rc.width() / 40;
 
         rc = new Rect(rc.left + seed * fak, rc.top + seed * fak, rc.right - seed * fak, rc.bottom - seed * fak);
-        PlacementCircleView.line(this, rc);
+
         int color = 200;
         if (hit) {
             color = 255;
@@ -136,6 +139,9 @@ public boolean simulate=false;
 
 
         }
+
+        view.line(this, rc);
+
         int distance = rc.width() / 20;
         int distance2 = rc.width() / 30;
 
@@ -152,7 +158,7 @@ public boolean simulate=false;
                 Rect rc1 = drawWithDegree(p, distance2, rc2);
 
                 if (!crashed)
-                    canvas.drawCircle(rc1.centerX(), rc1.centerY(), rc1.height() / 1.85f, carLine);
+                    canvas.drawCircle(rc1.centerX(), rc1.centerY(), (canvas.getClipBounds().height() / 100) - fak / 4, carLine);
 
                 //canvas.drawCircle(rc1.centerX(), rc1.centerY(), rc1.height() / 1.85f, carLine2);
 
@@ -168,13 +174,25 @@ public boolean simulate=false;
     public void hitMe() {
         hit = !hit;
         if (!hit) {
-            if (new Random().nextInt(5) == 3) {
-                inverse = inverse == 0 ? 1 : 0;
+            if (freaky > 0) {
+
+                if (new Random().nextInt(100) <= freaky) {
+                    inverse = inverse == 0 ? 1 : 0;
+                }
             }
         }
     }
 
     public void move() {
+
+        if (freaky > 0) {
+
+                if (new Random().nextInt(10000) <= freaky) {
+                    hit = !hit;
+                }
+
+        }
+
         if (hit) {
             float mm = 1f;
             if (inverse == 0) {
@@ -199,7 +217,7 @@ public boolean simulate=false;
                 round++;
                 rr = true;
                 position = 0;
-                if (length < ccNext * 3 && count > ccNext &&!simulate) {
+                if (length < ccNext * 3 && count > ccNext && !simulate) {
                     length += 1;
                     count = 1;
                     mover += 0.25f;
@@ -213,7 +231,7 @@ public boolean simulate=false;
                 round++;
                 rr = true;
                 position = 360;
-                if (length < ccNext * 3 && count > ccNext&&!simulate) {
+                if (length < ccNext * 3 && count > ccNext && !simulate) {
                     length += 1;
                     count = 1;
                     mover += 0.25f;
@@ -224,12 +242,12 @@ public boolean simulate=false;
             }
         }
 
-        if(simulate){
-            if(round>99){
-                round=99;
+        if (simulate) {
+            if (round > 99) {
+                round = 99;
             }
-            if( PlacementCircleView.rounds>99){
-                PlacementCircleView.rounds=99;
+            if (PlacementCircleView.rounds > 99) {
+                PlacementCircleView.rounds = 99;
             }
         }
 

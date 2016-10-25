@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import biitworx.games.race.riddle.riddlerace.data.helper.poco.Level;
 import biitworx.games.race.riddle.riddlerace.data.helper.poco.LevelSet;
@@ -32,6 +33,9 @@ public class LevelView extends View {
     public String name = "";
     LevelSet set;
     RectF menu;
+    RectF prev;
+    RectF next;
+
     public LevelChooser instance;
 
     public int greenLight = Color.argb(255, 100, 175, 130);
@@ -44,6 +48,17 @@ public class LevelView extends View {
 
     private List<Level> all = new ArrayList<>();
 
+    public boolean edit = false;
+
+    private int nn = 0;
+
+    int maxPage = 20;
+    int maxLine = 4;
+    int pageA = 0;
+    int pageN = 0;
+    int pageMax = 9;
+    private List<Level> subs = new ArrayList<>();
+
     public LevelView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -53,8 +68,27 @@ public class LevelView extends View {
         set = Levels.getSet(name);
     }
 
+    private int getCollected() {
+        int result = 0;
+        for (Level l : subs) {
+            result += l.getScore()>=l.getMax()?3:l.getScore()>=l.getMed()?2:l.getScore()>=l.getMin()?1:0;
+        }
+        return result;
+    }
+    private int getStars() {
+        return (int)(subs.size()*2.5f);
+    }
     @Override
     public void onDraw(Canvas canvas) {
+        if (!edit) {
+            int mod = set.getLevels().size() % maxPage;
+            pageMax = set.getLevels().size() / maxPage;
+            if (mod == 0) {
+                pageMax -= 1;
+            }
+        }
+        pageN = set.getLevels().size() / maxPage;
+        nn = 0;
         games.clear();
         all.clear();
         Rect inner = canvas.getClipBounds();
@@ -67,12 +101,17 @@ public class LevelView extends View {
         canvas.drawRect(inner, back);
 
 
-
         int seed = inner.height() / 20;
         Rect topper = new Rect(inner.left, inner.top, inner.right, inner.top + inner.height() / 10);
         Rect bottom = new Rect(inner.left, inner.bottom - inner.height() / 10, inner.right, inner.bottom);
 
-
+        int s1 = (pageA * maxPage);
+        int s2 = s1 + maxPage;
+        if (!edit) {
+            if (set.getLevels().size() < s2)
+                s2 = set.getLevels().size();
+            subs = set.getLevels().subList(s1, s2);
+        }
         // back.setShader(new RadialGradient(inner.centerX(), inner.centerY(), inner.width(), Color.argb(255, 255, 240, 220), Color.argb(255, 240, 230, 180), Shader.TileMode.MIRROR));
 
         Paint tp = new Paint();
@@ -81,10 +120,12 @@ public class LevelView extends View {
         tp.setColor(Color.argb(255, 50, 50, 50));
         tp.setFakeBoldText(true);
         tp.setShadowLayer(4, 0, 0, Color.argb(200, 50, 50, 50));
-        String nn = name + " - Stars: " + String.valueOf(set.getCollected()) + " / " + String.valueOf(set.getStars());
+
+
+        String nn = edit?TE.get(R.string.menu_editor): TE.get(R.string.menu_level_view_title) +" "+ String.valueOf(getCollected()) + " / " + String.valueOf(getStars());
         float tw = tp.measureText(nn);
 
-        canvas.drawText(nn, topper.centerX() - tw / 2, topper.centerY() - tw / 16, tp);
+        canvas.drawText(nn, topper.centerX() - tw / 2, topper.centerY() - tw / 20, tp);
 
 
         int ne = bottom.height() / 10;
@@ -117,9 +158,67 @@ public class LevelView extends View {
         float py = next.centerY() + apw / 16;
         canvas.drawText(text, next.centerX() - apw / 2, py, ap);
 
+        float ww = next.width() / 2;
+        this.prev = next = new RectF((bottom.left + bottom.width() / 2) + ne, bottom.top + ne, (bottom.right - ne) - ww, bottom.bottom - ne);
+        doButton(canvas, ne, next, ap, py, R.string.resource_menu_prev);
+        this.next = next = new RectF(((bottom.left + bottom.width() / 2) + ne + ne) + ww, bottom.top + ne, (bottom.right - ne), bottom.bottom - ne);
 
-        next = new RectF((bottom.left + bottom.width() / 2) + ne, bottom.top + ne, bottom.right - ne, bottom.bottom - ne);
-        ap.setShader(new RadialGradient(next.centerX(), next.centerY(), next.width(), set.getCollected() >= set.getStars() ? blueLight : grayLight, set.getCollected() >= set.getStars() ? blue : gray, Shader.TileMode.MIRROR));
+        doButton(canvas, ne, next, ap, py, R.string.resource_menu_next);
+
+        int lv = maxLine;
+        int w = inner.width() / lv;
+        int top = inner.top + seed;
+        int index = 0;
+
+        if (edit) {
+            for (int ix = s1; ix < s2; ix++) {
+                Rect rc = new Rect(inner.left + (w * index), top, inner.left + (w * (index + 1)), top + w);
+                UUID id = null;
+                if (set != null && set.getLevels().size() > ix)
+                    id = set.getLevels().get(ix).getUID();
+                drawTile(canvas, id, "Level " + String.valueOf(ix + 1) + " - " + TE.get(R.string.editor_level_name_std), rc, ix);
+                index++;
+                if (index == lv) {
+                    index = 0;
+                    top += w;
+                }
+                this.nn++;
+            }
+        } else {
+            if (set != null) {
+                for (Level item : set.getLevels().subList(s1, s2)) {
+
+                    Rect rc = new Rect(inner.left + (w * index), top, inner.left + (w * (index + 1)), top + w);
+                    drawTile(canvas, item.getUID(), item.getName(), rc, set.getLevels().indexOf(item));
+                    index++;
+                    if (index == lv) {
+                        index = 0;
+                        top += w;
+                    }
+
+                }
+            }
+        }
+
+    }
+
+    private void doButton(Canvas canvas, int ne, RectF next, Paint ap, float py, int id) {
+        String text;
+        float apw;
+        int col1 = grayLight;
+        int col2 = gray;
+
+        if (pageA > 0 && next.equals(this.prev)) {
+            col1 = blueLight;
+            col2 = blue;
+        }
+        if (pageA < pageMax && next.equals(this.next)) {
+            col1 = blueLight;
+            col2 = blue;
+        }
+
+
+        ap.setShader(new RadialGradient(next.centerX(), next.centerY(), next.width(), col1, col2, Shader.TileMode.MIRROR));
 
         ap.setStyle(Paint.Style.FILL_AND_STROKE);
         ap.setColor(Color.argb(255, 50, 50, 50));
@@ -137,36 +236,19 @@ public class LevelView extends View {
 
         canvas.drawRoundRect(next, ne, ne, ap);
 
-        text = TE.get(R.string.resource_menu_next);
+        text = TE.get(id);
         ap.setTextSize(next.height() / 3);
         ap.setFakeBoldText(true);
         apw = ap.measureText(text);
         ap.setStyle(Paint.Style.FILL);
         ap.setColor(Color.argb(255, 255, 255, 255));
         canvas.drawText(text, next.centerX() - apw / 2, py, ap);
-
-        int lv = 4;
-        int w = inner.width() / lv;
-        int top = inner.top + seed;
-        int index = 0;
-        if (set != null) {
-            for (Level item : set.getLevels()) {
-
-                Rect rc = new Rect(inner.left + (w * index), top, inner.left + (w * (index + 1)), top + w);
-                drawTile(canvas, item.getName(), rc);
-                index++;
-                if (index == lv) {
-                    index = 0;
-                    top += w;
-                }
-            }
-        }
-
     }
 
-    private void drawTile(Canvas canvas, String name, Rect inner) {
+    private void drawTile(Canvas canvas, UUID id, String name, Rect inner, int index) {
 
-        Level level = Levels.getLevel(name);
+        Level level = Levels.getLevel(id);
+
         int aa = 15;
 
         RectF inner2 = new RectF(inner.left + inner.width() / aa, inner.top + inner.width() / aa, inner.right - inner.width() / aa, inner.bottom - inner.width() / aa);
@@ -195,30 +277,63 @@ public class LevelView extends View {
         g.name = name;
         Paint tileBack = new Paint();
         tileBack.setStyle(Paint.Style.FILL);
-        bAdd = true; //TODO: entfernen
-        if (bAdd) {
 
+        boolean bColor = true;
+        if (edit) {
 
-            if (level != null && level.getScore() >= level.getMin()) {
+            bAdd = true;
+
+            if (level != null) {
                 tileBack.setColor(green);
-
                 tileBack.setShader(new RadialGradient(inner2.centerX(), inner2.centerY(), inner2.width(), greenLight, green, Shader.TileMode.MIRROR));
 
+
             } else {
+                if (this.nn > set.getLevels().size())
+                    bAdd = false;
+                else {
+                    level = new Level(name, 10, 20, 30, name, true);
+                    g.level = level;
+                    g.name = name;
+                }
 
-                tileBack.setColor(blue);
+                if (bAdd && set.getLevels().size() >= index) {
+                    tileBack.setShader(new RadialGradient(inner2.centerX(), inner2.centerY(), inner2.width(), blueLight, blue, Shader.TileMode.MIRROR));
+                } else {
+                    tileBack.setShader(new RadialGradient(inner2.centerX(), inner2.centerY(), inner2.width(), grayLight, gray, Shader.TileMode.MIRROR));
+                    bColor = false;
+                    bAdd=false;
+                }
 
-                tileBack.setShader(new RadialGradient(inner2.centerX(), inner2.centerY(), inner2.width(), blueLight, blue, Shader.TileMode.MIRROR));
 
             }
         } else {
-
-            tileBack.setColor(gray);
-
-            tileBack.setShader(new RadialGradient(inner2.centerX(), inner2.centerY(), inner2.width(), grayLight, gray, Shader.TileMode.MIRROR));
+            bAdd = true;
+            if (bAdd) {
 
 
+                if (level != null && level.getScore() >= level.getMin()) {
+                    tileBack.setColor(green);
+
+                    tileBack.setShader(new RadialGradient(inner2.centerX(), inner2.centerY(), inner2.width(), greenLight, green, Shader.TileMode.MIRROR));
+
+                } else {
+
+                    tileBack.setColor(blue);
+
+                    tileBack.setShader(new RadialGradient(inner2.centerX(), inner2.centerY(), inner2.width(), blueLight, blue, Shader.TileMode.MIRROR));
+
+                }
+            } else {
+
+                tileBack.setColor(gray);
+
+                tileBack.setShader(new RadialGradient(inner2.centerX(), inner2.centerY(), inner2.width(), grayLight, gray, Shader.TileMode.MIRROR));
+
+
+            }
         }
+
 
         Paint tileStroke = new Paint();
         tileStroke.setStyle(Paint.Style.STROKE);
@@ -250,7 +365,7 @@ public class LevelView extends View {
         tileStroke.setTextSize(inner2.width() / 8);
         tileStroke.setFakeBoldText(true);
         tileStroke.setStyle(Paint.Style.FILL_AND_STROKE);
-        if (bAdd) {
+        if (bAdd && bColor) {
             tileStroke.setColor(Color.argb(255, 255, 255, 255));
 
         }
@@ -265,7 +380,16 @@ public class LevelView extends View {
         tileStroke.setTextSize(inner2.width() / 8);
         String tt = level != null ? String.valueOf(level.getScore()) : "0";
         w = tileStroke.measureText(tt);
-        canvas.drawText(tt, inner2.centerX() - w / 2, inner2.bottom - (inner2.width() / 10), tileStroke);
+        if (!edit) {
+            canvas.drawText(tt, inner2.centerX() - w / 2, inner2.bottom - (inner2.width() / 10), tileStroke);
+        } else {
+
+            String nameA = level != null ? level.getName() : name;
+            String an = nameA.contains(" - ") ? nameA.split(" - ")[1] : nameA;
+            w = tileStroke.measureText(an);
+            canvas.drawText(an, inner2.centerX() - w / 2, inner2.bottom - (inner2.width() / 10), tileStroke);
+
+        }
 
         Rect stars = new Rect((int) inner2.left, (int) (inner2.bottom - inner2.height() / 6), (int) inner2.right, (int) inner2.bottom);
         int ws = (int) (stars.width() / 8.8f);
@@ -274,11 +398,11 @@ public class LevelView extends View {
         int med = level != null ? level.getMed() : 1000;
         int max = level != null ? level.getMax() : 1000;
 
-
-        makeStar(canvas, new Rect(stars.left + (int) (ws * 2), stars.top - (int) (1 * ws), stars.left + (int) (3 * ws), stars.bottom - (int) (1 * ws)), score >= min);
-        makeStar(canvas, new Rect(stars.left + (int) (ws * 4), stars.top - (int) (2 * ws), stars.left + (int) (5 * ws), stars.bottom - (int) (2 * ws)), score >= med);
-        makeStar(canvas, new Rect(stars.left + (int) (ws * 6), stars.top - (int) (1 * ws), stars.left + (int) (7 * ws), stars.bottom - (int) (1 * ws)), score >= max);
-
+        if (!edit) {
+            makeStar(canvas, new Rect(stars.left + (int) (ws * 2), stars.top - (int) (1 * ws), stars.left + (int) (3 * ws), stars.bottom - (int) (1 * ws)), score >= min);
+            makeStar(canvas, new Rect(stars.left + (int) (ws * 4), stars.top - (int) (2 * ws), stars.left + (int) (5 * ws), stars.bottom - (int) (2 * ws)), score >= med);
+            makeStar(canvas, new Rect(stars.left + (int) (ws * 6), stars.top - (int) (1 * ws), stars.left + (int) (7 * ws), stars.bottom - (int) (1 * ws)), score >= max);
+        }
         if (bAdd) {
             games.put(inner2, g);
         }
@@ -334,12 +458,27 @@ public class LevelView extends View {
         if (event.getAction() == MotionEvent.ACTION_DOWN && instance != null) {
             for (Map.Entry<RectF, Game> item : games.entrySet()) {
                 if (item.getKey().contains(event.getX(), event.getY()))
-                    instance.openActivity(item.getValue().level);
+                    if (!edit) {
+                        instance.openActivity(item.getValue().level);
+                    } else {
+                        instance.openEditActivity(item.getValue().level);
+                    }
 
             }
+            if (menu != null) {
+                if (menu.contains(event.getX(), event.getY()))
+                    instance.finish();
+            }
 
-            if (menu.contains(event.getX(), event.getY()))
-                instance.finish();
+            if (next.contains(event.getX(), event.getY())) {
+                if (pageA < pageMax)
+                    pageA++;
+            }
+            if (prev.contains(event.getX(), event.getY())) {
+                if (pageA > 0)
+                    pageA--;
+            }
+
         }
         return false;
     }

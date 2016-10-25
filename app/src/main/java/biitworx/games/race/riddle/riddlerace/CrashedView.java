@@ -30,13 +30,13 @@ public class CrashedView {
 
     String crash1;
     String crash2;
-    String t1 = "Retry";
-    String t2 = "Abort";
-    String t3 = "Next";
+    String t1 = TE.get(R.string.crashed_retry);
+    String t2 = TE.get(R.string.crashed_abort);
+    String t3 = TE.get(R.string.crashed_next);
 
     Paint text = new Paint();
 
-    public void onDraw(Canvas canvas,Level level,Rect inner) {
+    public void onDraw(Canvas canvas, Level level, Rect inner) {
 
         crash1 = TE.get(R.string.resource_crash_head1);
         Paint back = new Paint();
@@ -84,7 +84,7 @@ public class CrashedView {
         canvas.drawText(t3, next1.exactCenterX() - wt / 4, next1.bottom, back);
 
 
-        back.setColor(level.getScore()>= level.getMin()?colorGreenLight:colorRedLight);
+        back.setColor(level.getScore() >= level.getMin() ? colorGreenLight : colorRedLight);
         canvas.drawRect(line1, back);
         canvas.drawRect(line2, back);
 
@@ -92,10 +92,10 @@ public class CrashedView {
         text.setTextSize(inner.height() / 6);
         text.setFakeBoldText(true);
         text.setAntiAlias(true);
-        text.setColor(level.getScore()>= level.getMin()?colorGreen:colorRed);
+        text.setColor(level.getScore() >= level.getMin() ? colorGreen : colorRed);
         float w = text.measureText(crash1);
         canvas.drawText(crash1, line1.centerX() - w / 2, line1.top - line1.height() / 2, text);
-        crash2 = TE.get(level.getScore()>= level.getMin()?R.string.resource_crash_bottom2:R.string.resource_crash_bottom1);
+        crash2 = TE.get(level.getScore() >= level.getMin() ? R.string.resource_crash_bottom2 : R.string.resource_crash_bottom1);
 
         w = text.measureText(crash2);
         canvas.drawText(crash2, line2.centerX() - w / 2, line2.bottom + line2.height(), text);

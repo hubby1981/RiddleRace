@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import biitworx.games.race.riddle.riddlerace.data.helper.poco.Level;
+import biitworx.games.race.riddle.riddlerace.data.helper.poco.LevelSet;
 import biitworx.games.race.riddle.riddlerace.data.helper.poco.Levels;
 
 /**
@@ -107,7 +108,7 @@ public class PlacementCircleView extends View {
         for (Map.Entry<CircleView, Rect> item : lines.entrySet()) {
             Rect rc = item.getValue();
 
-            int color = 60;
+            int color = 40;
             //circleLine2.setColor(item.getKey().carLine.getColor());
 
             if (item.getKey().rr) {
@@ -199,7 +200,7 @@ public class PlacementCircleView extends View {
             Rect rc = new Rect(rcBottom.left + (index * w), rcBottom.top, rcBottom.left + ((index + 1) * w), rcBottom.bottom);
             hiter.put(v, rc);
             //canvas.drawRect(rc, v.carLine);
-            int si = allViews().size() > 3 ? 8 : allViews().size() > 2 ? 12 : 16;
+            int si = (4 * 9) / allViews().size();//allViews().size() > 6 ? 4 : allViews().size() > 5 ? 6 : allViews().size() > 3 ? 8 : allViews().size() > 2 ? 12 : 16;
             int w1 = rc.width() / si;
             int h1 = rc.height() / 4;
             if (v.hit && !crashed) {
@@ -337,17 +338,25 @@ public class PlacementCircleView extends View {
                     if (crashedView.isNext(x, y)) {
 
                         if (level.getScore() >= level.getMin()) {
-                            Level next = Levels.getLevel(level.getNext());
-                            if (next != null) {
-                                MainMenu.that.openActivity(next);
+                            LevelSet s = Levels.getLevelSet(level.getUID());
+                            if (s != null && s.getLevels().size() >= 0) {
+                                int xx = s.getLevels().indexOf(level) + 1;
+                                if (xx < s.getLevels().size()) {
+                                    MainMenu.that.openActivity(s.getLevels().get(xx));
+                                }
+                                else {
+                                    clean();
+                                }
+                            } else {
+                                clean();
                             }
                         } else {
                             retryIt();
                         }
                     }
-
-                    clean();
-
+                    if (crashedView.isAbort(x, y)) {
+                        clean();
+                    }
                 }
             }
         }

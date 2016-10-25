@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 import biitworx.games.race.riddle.riddlerace.MainMenu;
+import biitworx.games.race.riddle.riddlerace.data.helper.poco.Circle;
+import biitworx.games.race.riddle.riddlerace.data.helper.poco.Level;
+import biitworx.games.race.riddle.riddlerace.data.helper.poco.LevelSet;
+import biitworx.games.race.riddle.riddlerace.data.helper.poco.User;
 
 
 /**
@@ -22,7 +26,11 @@ public class SecureDataSetup {
     public SecureDataSetup() {
 
         ///TODO: tables to add
-        //secureDataList.add(Level.class);
+/*
+        secureDataList.add(Level.class);
+        secureDataList.add(Circle.class);
+        secureDataList.add(LevelSet.class);
+        secureDataList.add(User.class);*/
     }
 
     public HashMap<String, List<Object>> getAll(SQLiteDatabase db) {

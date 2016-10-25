@@ -125,7 +125,7 @@ public abstract class MainView extends AppCompatActivity {
                             @Override
                             public void run() {
                                 level.setScore(place.rounds);
-                                Levels.updateLevel(level,false);
+                                Levels.updateLevel(level, false);
                             }
                         };
                         Thread t = new Thread(r);
@@ -152,12 +152,12 @@ public abstract class MainView extends AppCompatActivity {
     protected PlacementCircleView getPlacementCircleView(String idName) {
 
         PlacementCircleView place = new PlacementCircleView(getApplicationContext(), idName);
-
+        place.start(level);
 
         addPlacement(place);
 
         for (Circle c : level.getCircles()) {
-            place.addAll(new CircleView(place, c.getRed(), c.getGreen(), c.getBlue(), c.getMover(), c.getPosx(), c.getPosy(), c.getDirection(), c.getLength(), c.getInverse(), c.getPosition(), c.getNext(), c.getFaktor()));
+            place.addAll(new CircleView(place, Levels.getRedArray()[c.getColor()], Levels.getGreenArray()[c.getColor()], Levels.getBlueArray()[c.getColor()], c.getMover(), c.getPosx(), c.getPosy(), c.getDirection(), c.getLength(), c.getInverse(), c.getPosition(), c.getNext(), c.getFaktor(), c.getFreaky()));
         }
         return place;
     }
@@ -165,7 +165,8 @@ public abstract class MainView extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-        count = 3;place.start(level);
+        count = 3;
+        place.start(level);
         if (time != null)
             time.cancel();
 

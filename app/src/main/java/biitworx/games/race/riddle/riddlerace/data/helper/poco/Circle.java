@@ -1,5 +1,13 @@
 package biitworx.games.race.riddle.riddlerace.data.helper.poco;
 
+import android.graphics.Color;
+import android.graphics.Point;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import biitworx.games.race.riddle.riddlerace.MainMenu;
 import biitworx.games.race.riddle.riddlerace.data.helper.BaseDataObject;
 import biitworx.games.race.riddle.riddlerace.data.helper.DbField;
 import biitworx.games.race.riddle.riddlerace.data.helper.DbTable;
@@ -9,12 +17,7 @@ import biitworx.games.race.riddle.riddlerace.data.helper.DbTable;
  */
 @DbTable(name = "circle")
 public class Circle extends BaseDataObject {
-    @DbField(name = "red")
-    private int red;
-    @DbField(name = "green")
-    private int green;
-    @DbField(name = "blue")
-    private int blue;
+
     @DbField(name = "mover")
     private int mover;
     @DbField(name = "posx")
@@ -33,6 +36,14 @@ public class Circle extends BaseDataObject {
     private int next;
     @DbField(name = "faktor")
     private int faktor;
+    @DbField(name = "pointx")
+    private int pointx = 2;
+    @DbField(name = "pointy")
+    private int pointy = 2;
+    @DbField(name = "color")
+    private int color;
+    @DbField(name = "freaky")
+    private int freaky;
 
     @Override
     protected void imported() {
@@ -43,11 +54,56 @@ public class Circle extends BaseDataObject {
 
     }
 
+    public void setJSON(JSONObject data) {
+        try {
 
-    public Circle(int red, int green, int blue, int speed, int positionx, int positiony, int direction, int length, int inverse, int position, int next, int faktor) {
-        this.red = red;
-        this.green = green;
-        this.blue = blue;
+
+            mover = data.getInt("mover");
+            posx = data.getInt("posx");
+            posy = data.getInt("posy");
+            length = data.getInt("length");
+            direction = data.getInt("direction");
+            inverse = data.getInt("inverse");
+            position = data.getInt("position");
+            next = data.getInt("next");
+            faktor = data.getInt("faktor");
+            pointx = data.getInt("pointx");
+            pointy = data.getInt("pointy");
+            color = data.getInt("color");
+            freaky = data.getInt("freaky");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public JSONObject getJSON() {
+        JSONObject result = new JSONObject();
+        try {
+            result.put("mover", mover);
+            result.put("posx", posx);
+            result.put("posy", posy);
+            result.put("direction", direction);
+            result.put("length", length);
+            result.put("inverse", next);
+            result.put("position", position);
+            result.put("next", next);
+            result.put("faktor", faktor);
+            result.put("pointx", pointx);
+            result.put("pointy", pointy);
+            result.put("color", color);
+            result.put("freaky", freaky);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
+    public Circle(int speed, int positionx, int positiony, int direction, int length, int inverse, int position, int next, int faktor, int pointx, int pointy, int color) {
+
         this.mover = speed;
         this.posx = positionx;
         this.posy = positiony;
@@ -57,19 +113,16 @@ public class Circle extends BaseDataObject {
         this.position = position;
         this.next = next;
         this.faktor = faktor;
+        this.pointx = pointx;
+        this.pointy = pointy;
+        this.color = color;
+        this.freaky = 0;
     }
 
-    public int getRed() {
-        return red;
+    public Point getPoint() {
+        return new Point(getPointx(), getPointy());
     }
 
-    public int getGreen() {
-        return green;
-    }
-
-    public int getBlue() {
-        return blue;
-    }
 
     public int getMover() {
         return mover;
@@ -129,5 +182,43 @@ public class Circle extends BaseDataObject {
 
     public void setFaktor(int faktor) {
         this.faktor = faktor;
+    }
+
+    public int getPointx() {
+        return pointx;
+    }
+
+    public int getPointy() {
+        return pointy;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
+    }
+
+    public int getFreaky() {
+        return freaky;
+    }
+
+    public void setFreaky(int freaky) {
+        this.freaky = freaky;
+    }
+
+
+    public enum CircleColorEnum {
+        Green,
+        Red,
+        Blue,
+        Purple,
+        Orange,
+        Teal,
+        Lime,
+        Pink,
+        Gray,
+        Yellow
     }
 }
