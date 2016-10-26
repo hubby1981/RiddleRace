@@ -48,9 +48,9 @@ public class ShopMenuView extends View {
         item2 = new RectF(inner.left, inner.top + size * 4, inner.right, inner.top + size * 5);
         float cw = item0.height() / 10;
 
-        RectF state0 = new RectF((item0.left + item0.width() / 2) + cw * 4, item0.top + cw * 2, item0.right - cw * 2, item0.bottom - cw * 2);
-        RectF state1 = new RectF((item1.left + item1.width() / 2) + cw * 4, item1.top + cw * 2, item1.right - cw * 2, item1.bottom - cw * 2);
-        RectF state2 = new RectF((item2.left + item2.width() / 2) + cw * 4, item2.top + cw * 2, item2.right - cw * 2, item2.bottom - cw * 2);
+        RectF state0 = new RectF((item0.left + item0.width() / 2) + cw *8, item0.top + cw * 2, item0.right - cw * 2, item0.bottom - cw * 2);
+        RectF state1 = new RectF((item1.left + item1.width() / 2) + cw *8, item1.top + cw * 2, item1.right - cw * 2, item1.bottom - cw * 2);
+        RectF state2 = new RectF((item2.left + item2.width() / 2) + cw *8, item2.top + cw * 2, item2.right - cw * 2, item2.bottom - cw * 2);
 
         Paint text = new Paint();
         text.setTextSize(title.height() / 1.5f);
@@ -91,6 +91,7 @@ public class ShopMenuView extends View {
         BG.drawText(canvas, text, item2,
                 MainMenu.user.isCommunity() ? TE.get(R.string.shop_state_1) : TE.get(R.string.shop_state_0),
                 MainMenu.user.isCommunity() ? C.green : C.red, false, 2.5f);
+        text.setTextSize(title.height() / 3.5f);
 
         if (!MainMenu.user.isEditor()) {
             drawBuyButton(canvas, cw, state0, text, back);
@@ -121,7 +122,7 @@ public class ShopMenuView extends View {
         back.setStrokeWidth(6);
         canvas.drawRoundRect(state0, cw, cw, back);
 
-        BG.drawText(canvas, text, state0, TE.get(R.string.overlay_editor_buy_yes), Color.WHITE, true, 12);
+        BG.drawText(canvas, text, state0, TE.get(R.string.overlay_editor_buy_yes), Color.WHITE, true, 10);
     }
 
 
