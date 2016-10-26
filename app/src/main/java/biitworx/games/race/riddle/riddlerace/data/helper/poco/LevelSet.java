@@ -33,46 +33,6 @@ public class LevelSet extends BaseDataObject {
 
     }
 
-    public JSONObject getJSON(){
-        JSONObject result = new JSONObject();
-        try {
-            result.put("name",name);
-            result.put("stars",stars);
-            result.put("collected",collected);
-            result.put("editable",editable);
-            JSONArray lev = new JSONArray();
-
-            for(Level l:levels){
-                lev.put(l.getJSON());
-            }
-            result.put("levels",lev);
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
-    public void setJSON(JSONObject data){
-        try {
-            name=data.getString("name");
-            stars=data.getInt("stars");
-            collected=data.getInt("collected");
-            editable=data.getBoolean("editable");
-
-            JSONArray a = data.getJSONArray("levels");
-            for(int i =0;i<a.length();i++){
-                Level level = new Level();
-                level.setJSON(a.getJSONObject(i));
-                MainMenu.DATA.insert(level, true, MainMenu.DATA.get());
-                levels.add(level);
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
 
     public LevelSet(String name, int stars) {
         this.name = name;

@@ -24,6 +24,7 @@
     <string name="menu_editor_properties">Ball</string>
     <string name="menu_editor_preview">Preview</string>
     <string name="menu_editor_level">Level</string>
+    <string name="menu_editor_help">*</string>
 
     <string name="menu_level_view_title">Collected Stars: </string>
 
@@ -53,5 +54,28 @@
     <string name="crashed_retry">Retry</string>
     <string name="crashed_abort">Abort</string>
     <string name="crashed_next">Next</string>
+
+
+    <string name="overlay_editor_save_yes">Confirm</string>
+    <string name="overlay_editor_save_no">Abort</string>
+    <string name="overlay_editor_save_title">Warning</string>
+    <string name="overlay_editor_save_text">Would you delete that level?</string>
+
+    <string name="overlay_editor_buy_yes">Buy it</string>
+    <string name="overlay_editor_buy_no">No thanks</string>
+    <string name="overlay_editor_buy_title">Feature not buyed</string>
+    <string name="overlay_editor_buy_text">You have to buy the editor feature.</string>
+
+
+    <string name="overlay_editor_store_title">Information</string>
+    <string name="overlay_editor_store_text">Please wait, saving takes a moment…</string>
+
+
+    <string name="shop_buy_item_0">Level Editor</string>
+    <string name="shop_buy_item_1">No Ads</string>
+    <string name="shop_buy_item_2">Community Account</string>
+
+    <string name="shop_state_0">not buyed</string>
+    <string name="shop_state_1">buyed</string>
 
 </resources>

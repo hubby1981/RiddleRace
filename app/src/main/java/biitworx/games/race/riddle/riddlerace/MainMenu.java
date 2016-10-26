@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.UUID;
 
 import biitworx.games.race.riddle.riddlerace.data.helper.DbHelper;
+import biitworx.games.race.riddle.riddlerace.data.helper.JSONHelper;
 import biitworx.games.race.riddle.riddlerace.data.helper.poco.Level;
 import biitworx.games.race.riddle.riddlerace.data.helper.poco.LevelSet;
 import biitworx.games.race.riddle.riddlerace.data.helper.poco.Levels;
@@ -57,11 +58,23 @@ public class MainMenu extends AppCompatActivity {
     }
 
 
+    public void update(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                findViewById(R.id.viewMenu).invalidate();
+            }
+        });
+    }
+
+
     private void checkUser() {
         List<User> u = DATA.getData(User.class, DATA.get(), true);
         if (u == null || u.size() == 0) {
             user = new User("USER" + String.valueOf(UUID.randomUUID().hashCode()), "generated");
             DATA.insert(user, true, DATA.get());
+        }else{
+            user=u.get(0);
         }
     }
 
@@ -76,7 +89,7 @@ public class MainMenu extends AppCompatActivity {
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("plain/text");
 
-        JSONObject o = new JSONObject();
+        /*JSONObject o = new JSONObject();
         JSONArray a = new JSONArray();
         for(LevelSet s: Levels.sets){
             a.put(s.getJSON());
@@ -85,7 +98,9 @@ public class MainMenu extends AppCompatActivity {
             o.put("sets",a);
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
+
+        JSONObject o = JSONHelper.mapFromObject(Levels.all);
 
         i.putExtra(Intent.EXTRA_EMAIL, new String[]{"marcel.weissgerber@live.de"});
         i.putExtra(Intent.EXTRA_SUBJECT, "DATA");

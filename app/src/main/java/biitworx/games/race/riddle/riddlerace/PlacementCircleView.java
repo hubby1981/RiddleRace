@@ -319,7 +319,7 @@ public class PlacementCircleView extends View {
 
                     for (Map.Entry<CircleView, Rect> item : hiter.entrySet()) {
                         if (item.getKey().hit && !item.getValue().contains(x, y))
-                            return false;
+                           item.getKey().hitMe();
                     }
 
                     for (Map.Entry<CircleView, Rect> item : hiter.entrySet()) {

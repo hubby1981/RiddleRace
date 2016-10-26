@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="resource_menu_back">Zurück zum Menu</string>
+
+    <string name="resource_menu_prev">Vorher</string>
+    <string name="resource_menu_next">Nächstes</string>
+    <string name="menu_level_view_title">Gesammelte Sterne: </string>
+
+    <string name="resource_crash_head1">Bälle zusamengestoßen!</string>
+    <string name="resource_crash_bottom1">Versuch es nochmal, Tiger!</string>
+    <string name="resource_crash_bottom2">Cool Level geschafft!</string>
+
+    <string name="menu_play">Spielen</string>
+    <string name="menu_options">Optionen</string>
+    <string name="menu_tutorial">Anleitung</string>
+    <string name="menu_shop">Shop</string>
+    <string name="menu_close">Verlassen</string>
+    <string name="menu_editor">Level Editor</string>
+    <string name="menu_editor_plain">Editor: </string>
+
+    <string name="menu_editor_board">Spiel</string>
+    <string name="menu_editor_properties">Ball</string>
+    <string name="menu_editor_preview">Vorschau</string>
+
+
+    <string name="menu_editor_delete">Undo</string>
+    <string name="menu_editor_save">Save</string>
+    <string name="menu_editor_back">Zurück</string>
+    <string name="menu_editor_del">DEL</string>
+
+
+    <string name="editor_value_color">Farbe:</string>
+    <string name="editor_value_speed">Geschw.:</string>
+    <string name="editor_value_inverse">Drehung:</string>
+    <string name="editor_value_postion">Grad:</string>
+    <string name="editor_value_length">Länge:</string>
+    <string name="editor_value_next">Schneller:</string>
+    <string name="editor_value_faktor">Faktor:</string>
+
+    <string name="editor_level_name">Name:</string>
+    <string name="editor_level_min">Minimum:</string>
+    <string name="editor_level_med">Medium:</string>
+    <string name="editor_level_max">Maximum:</string>
+
+
+    <string name="editor_level_name_std">unbekannt</string>
+    <string name="crashed_retry">Neustart</string>
+    <string name="crashed_abort">Abbruch</string>
+    <string name="crashed_next">Nächstes</string>
+</resources>

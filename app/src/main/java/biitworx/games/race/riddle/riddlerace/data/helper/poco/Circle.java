@@ -54,54 +54,6 @@ public class Circle extends BaseDataObject {
 
     }
 
-    public void setJSON(JSONObject data) {
-        try {
-
-
-            mover = data.getInt("mover");
-            posx = data.getInt("posx");
-            posy = data.getInt("posy");
-            length = data.getInt("length");
-            direction = data.getInt("direction");
-            inverse = data.getInt("inverse");
-            position = data.getInt("position");
-            next = data.getInt("next");
-            faktor = data.getInt("faktor");
-            pointx = data.getInt("pointx");
-            pointy = data.getInt("pointy");
-            color = data.getInt("color");
-            freaky = data.getInt("freaky");
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public JSONObject getJSON() {
-        JSONObject result = new JSONObject();
-        try {
-            result.put("mover", mover);
-            result.put("posx", posx);
-            result.put("posy", posy);
-            result.put("direction", direction);
-            result.put("length", length);
-            result.put("inverse", next);
-            result.put("position", position);
-            result.put("next", next);
-            result.put("faktor", faktor);
-            result.put("pointx", pointx);
-            result.put("pointy", pointy);
-            result.put("color", color);
-            result.put("freaky", freaky);
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
-
     public Circle(int speed, int positionx, int positiony, int direction, int length, int inverse, int position, int next, int faktor, int pointx, int pointy, int color) {
 
         this.mover = speed;

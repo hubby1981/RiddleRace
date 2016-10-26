@@ -29,7 +29,10 @@
         <activity
             android:name=".LevelChooser"
             android:screenOrientation="portrait" />
-        <activity android:name=".LevelEditor" android:screenOrientation="portrait" ></activity>
+        <activity
+            android:name=".LevelEditor"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ShopView"  android:screenOrientation="portrait" ></activity>
     </application>
 
 </manifest>

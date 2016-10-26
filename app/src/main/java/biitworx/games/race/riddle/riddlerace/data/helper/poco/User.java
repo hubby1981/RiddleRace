@@ -21,6 +21,12 @@ public class User extends BaseDataObject {
     @DbField(name = "editor")
     private boolean editor = false;
 
+    @DbField(name = "ads")
+    private boolean ads = false;
+
+    @DbField(name = "community")
+    private boolean community= false;
+
     @DbField(name="tutorial")
     public boolean tutorial = true;
 
@@ -60,5 +66,25 @@ public class User extends BaseDataObject {
 
     public boolean isTutorial() {
         return tutorial;
+    }
+
+    public void setEditor(){
+        editor=!editor;
+    }
+
+    public boolean isAds() {
+        return ads;
+    }
+
+    public void setAds(boolean ads) {
+        this.ads = ads;
+    }
+
+    public boolean isCommunity() {
+        return community;
+    }
+
+    public void setCommunity(boolean community) {
+        this.community = community;
     }
 }

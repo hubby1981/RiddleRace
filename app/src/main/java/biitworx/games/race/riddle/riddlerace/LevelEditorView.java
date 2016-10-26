@@ -40,14 +40,6 @@ public class LevelEditorView extends View {
 
     private HashMap<Point, RectF> clicker = new HashMap<>();
 
-    public int greenLight = Color.argb(255, 100, 175, 130);
-    public int green = Color.argb(255, 50, 130, 70);
-    public int redLight = Color.argb(255, 255, 160, 160);
-    public int red = Color.argb(255, 180, 60, 60);
-    public int blueLight = Color.argb(255, 100, 160, 190);
-    public int blue = Color.argb(255, 50, 100, 130);
-    public int grayLight = Color.argb(255, 180, 180, 180);
-    public int gray = Color.argb(255, 120, 120, 120);
     public Point active = null;
     public LevelEditor view;
     public int tab = 0;
@@ -58,18 +50,20 @@ public class LevelEditorView extends View {
     RectF tab1;
     RectF tab2;
     RectF tab3;
+    RectF tab4;
 
     RectF button0;
     RectF button1;
     RectF button2;
     RectF button3;
+
     RectF editProp = null;
     PlacementCircleView place = null;
     Level level = MainMenu.levelItem;
 
     public int max = 10;
     public int mm = 0;
-    private OverlayWindow overlay = new OverlayWindow();
+    private OverlayWindow overlay = new OverlayWindow(true);
 
     public LevelEditorView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -107,17 +101,19 @@ public class LevelEditorView extends View {
         RectF topper = new RectF(inner.left + w / 4, inner.top + h * 0, inner.right - w / 4, inner.top + h * 2);
 
 
-        float tw = tabs.width() / 11;
+        float tw = tabs.width() / 12;
         tab0 = new RectF(tabs.left + tw * 0, tabs.top, tabs.left + tw * 2.85f, tabs.bottom);
         tab2 = new RectF(tabs.left + tw * 3f, tabs.top, tabs.left + tw * 5.85f, tabs.bottom);
-        tab1 = new RectF(tabs.left + tw * 6f, tabs.top, tabs.left + tw * 9, tabs.bottom);
-        tab3 = new RectF(tabs.left + tw * 9.15f, tabs.top, tabs.left + tw * 11, tabs.bottom);
+        tab1 = new RectF(tabs.left + tw * 6f, tabs.top, tabs.left + tw * 8.5f, tabs.bottom);
+        tab3 = new RectF(tabs.left + tw * 8.65f, tabs.top, tabs.left + tw * 10.65f, tabs.bottom);
+        tab4 = new RectF(tabs.left + tw * 10.8f, tabs.top, tabs.left + tw * 12, tabs.bottom);
 
         tw = tabs.width() / 13;
         button0 = new RectF(delete.left + tw * 0, delete.top, delete.left + tw * 3, delete.bottom);
         button1 = new RectF(delete.left + tw * 3.25f, delete.top, delete.left + tw * 6.375f, delete.bottom);
         button2 = new RectF(delete.left + tw * 6.575f, delete.top, delete.left + tw * 9.75f, delete.bottom);
         button3 = new RectF(delete.left + tw * 10f, delete.top, delete.left + tw * 13, delete.bottom);
+
 
 
         Paint rc = new Paint();
@@ -132,6 +128,7 @@ public class LevelEditorView extends View {
         canvas.drawRoundRect(tab1, 0, 0, rc);
         canvas.drawRoundRect(tab2, 0, 0, rc);
         canvas.drawRoundRect(tab3, 0, 0, rc);
+        canvas.drawRoundRect(tab4, 0, 0, rc);
 
 
         rc.setColor(Color.argb(128, 255, 255, 255));
@@ -139,13 +136,13 @@ public class LevelEditorView extends View {
         canvas.drawRoundRect(button1, cw, cw, rc);
         canvas.drawRoundRect(button2, cw, cw, rc);
 
-        rc.setShader(new RadialGradient(delete.centerX(), delete.centerY(), delete.width(), blueLight, blue, Shader.TileMode.MIRROR));
+        rc.setShader(new RadialGradient(delete.centerX(), delete.centerY(), delete.width(), C.blueLight, C.blue, Shader.TileMode.MIRROR));
         canvas.drawRoundRect(button0, cw, cw, rc);
         canvas.drawRoundRect(button1, cw, cw, rc);
-        rc.setShader(new RadialGradient(delete.centerX(), delete.centerY(), delete.width(), greenLight, green, Shader.TileMode.MIRROR));
+        rc.setShader(new RadialGradient(delete.centerX(), delete.centerY(), delete.width(), C.greenLight, C.green, Shader.TileMode.MIRROR));
 
         canvas.drawRoundRect(button2, cw, cw, rc);
-        rc.setShader(new RadialGradient(delete.centerX(), delete.centerY(), delete.width(), redLight, red, Shader.TileMode.MIRROR));
+        rc.setShader(new RadialGradient(delete.centerX(), delete.centerY(), delete.width(), C.redLight, C.red, Shader.TileMode.MIRROR));
 
         canvas.drawRoundRect(button3, cw, cw, rc);
 
@@ -156,15 +153,16 @@ public class LevelEditorView extends View {
         canvas.drawRoundRect(button3, cw, cw, rc);
 
         rc.setShader(null);
-        rc.setStrokeWidth(3);
+        rc.setStrokeWidth(6);
         rc.setStyle(Paint.Style.STROKE);
-        rc.setColor(Color.argb(255, 25, 90, 90));
+        rc.setColor(Color.argb(255, 50,50,50));
 
         canvas.drawRoundRect(position, 0, 0, rc);
         canvas.drawRoundRect(tab0, 0, 0, rc);
         canvas.drawRoundRect(tab1, 0, 0, rc);
         canvas.drawRoundRect(tab2, 0, 0, rc);
         canvas.drawRoundRect(tab3, 0, 0, rc);
+        canvas.drawRoundRect(tab4, 0, 0, rc);
 
         canvas.drawRoundRect(button0, cw, cw, rc);
         canvas.drawRoundRect(button1, cw, cw, rc);
@@ -178,20 +176,7 @@ public class LevelEditorView extends View {
 
 
         if (tab == 0) {
-            rc.setStyle(Paint.Style.STROKE);
 
-
-            rc.setStrokeWidth(4);
-            rc.setAntiAlias(true);
-
-            for (RectF r : clicker.values()) {
-                rc.setStyle(Paint.Style.FILL);
-                rc.setColor(Color.argb(100, 50, 50, 50));
-                canvas.drawCircle(r.centerX(), r.centerY(), r.width() / 4, rc);
-                rc.setStyle(Paint.Style.STROKE);
-                rc.setColor(Color.argb(255, 0, 0, 0));
-                canvas.drawCircle(r.centerX(), r.centerY(), r.width() / 4, rc);
-            }
             rc.setStyle(Paint.Style.FILL);
 
             rc.setColor(Color.argb(100, 50, 50, 50));
@@ -205,7 +190,20 @@ public class LevelEditorView extends View {
                 canvas.drawCircle(r.centerX(), r.centerY(), r.width() / 4, rc);
 
             }
+            rc.setStyle(Paint.Style.STROKE);
 
+
+            rc.setStrokeWidth(6);
+            rc.setAntiAlias(true);
+
+            for (RectF r : clicker.values()) {
+                rc.setStyle(Paint.Style.FILL);
+                rc.setColor(Color.argb(10, 255,255,255));
+                canvas.drawCircle(r.centerX(), r.centerY(), r.width() / 4, rc);
+                rc.setStyle(Paint.Style.STROKE);
+                rc.setColor(Color.argb(255, 50,50,50));
+                canvas.drawCircle(r.centerX(), r.centerY(), r.width() / 4, rc);
+            }
         }
 
 
@@ -233,7 +231,7 @@ public class LevelEditorView extends View {
 
         rc.setStyle(Paint.Style.FILL);
 
-        rc.setColor(Color.argb(200, 50, 70, 70));
+        rc.setColor(Color.argb(200,10,120,70));
 
         if (tab == 0) {
             canvas.drawRoundRect(tab0, 0, 0, rc);
@@ -256,6 +254,11 @@ public class LevelEditorView extends View {
 
         }
 
+        if (tab == 4) {
+            canvas.drawRoundRect(tab4, 0, 0, rc);
+
+        }
+
         rc.setStyle(Paint.Style.FILL);
 
         rc.setTextSize(tabs.height() / 3.5f);
@@ -266,6 +269,7 @@ public class LevelEditorView extends View {
         drawText(canvas, rc, tab1, R.string.menu_editor_properties, tab == 1 ? Color.argb(255, 255, 255, 255) : Color.argb(255, 0, 0, 0), true);
         drawText(canvas, rc, tab2, R.string.menu_editor_preview, tab == 2 ? Color.argb(255, 255, 255, 255) : Color.argb(255, 0, 0, 0), true);
         drawText(canvas, rc, tab3, R.string.menu_editor_level, tab == 3 ? Color.argb(255, 255, 255, 255) : Color.argb(255, 0, 0, 0), true);
+        drawText(canvas, rc, tab4, R.string.menu_editor_help, tab == 4 ? Color.argb(255, 255, 255, 255) : Color.argb(255, 0, 0, 0), true);
 
 
         drawText(canvas, rc, button0, R.string.menu_editor_back, Color.argb(255, 0, 0, 0), true);
@@ -333,7 +337,7 @@ public class LevelEditorView extends View {
         p.setStyle(Paint.Style.FILL);
         canvas.drawCircle(rc2.centerX() - rc2.width() / 2.5f, rc2.centerY(), rc2.width() / 3f, p);
         p.setStyle(Paint.Style.STROKE);
-        p.setStrokeWidth(3);
+        p.setStrokeWidth(6);
         p.setColor(Color.argb(255, 50, 50, 50));
         canvas.drawCircle(rc2.centerX() - rc2.width() / 2.5f, rc2.centerY(), rc2.width() / 3f, p);
         p.setStyle(Paint.Style.FILL);
@@ -351,7 +355,7 @@ public class LevelEditorView extends View {
 
             RectF rcMinus = new RectF((rc3.right - rc3.width() / 2) + w, rc3.top + w / 4, rc3.right - w, rc3.bottom - w / 4);
             p.setStyle(Paint.Style.STROKE);
-            p.setStrokeWidth(4);
+            p.setStrokeWidth(6);
             canvas.drawRoundRect(rcPlus, w, w, p);
             canvas.drawRoundRect(rcMinus, w, w, p);
             p.setStyle(Paint.Style.FILL);
@@ -372,8 +376,8 @@ public class LevelEditorView extends View {
 
 
         p.setStyle(Paint.Style.STROKE);
-        p.setStrokeWidth(3);
-        p.setPathEffect(new DashPathEffect(new float[]{4f, 4f}, 4f));
+        p.setStrokeWidth(6);
+        p.setPathEffect(new DashPathEffect(new float[]{10f, 10f}, 10f));
         canvas.drawRoundRect(rc2, rc.width() / 40, rc.width() / 40, p);
 
         if (view.text.getVisibility() == View.VISIBLE && editProp != null && editProp.equals(rc2)) {
@@ -381,7 +385,7 @@ public class LevelEditorView extends View {
             p.setColor(Color.argb(128, 255, 255, 255));
             canvas.drawRoundRect(rc2, rc2.width() / 20, rc2.width() / 20, p);
             if (!stop) {
-                p.setColor(Color.argb(128, 50, 50, 50));
+                p.setColor(Color.argb(175, 50, 50, 50));
 
                 float o = p.getTextSize();
                 p.setTextSize(rc.height() / 3.5f);
@@ -421,7 +425,7 @@ public class LevelEditorView extends View {
 
             RectF rcMinus = new RectF((rc3.right - rc3.width() / 2) + w, rc3.top + w / 4, rc3.right - w, rc3.bottom - w / 4);
             p.setStyle(Paint.Style.STROKE);
-            p.setStrokeWidth(4);
+            p.setStrokeWidth(6);
             canvas.drawRoundRect(rcPlus, w, w, p);
             canvas.drawRoundRect(rcMinus, w, w, p);
             p.setStyle(Paint.Style.FILL);
@@ -496,6 +500,13 @@ public class LevelEditorView extends View {
                     tab = 3;
 
                 }
+
+                if (tab4.contains(event.getX(), event.getY())) {
+                    propMe();
+
+                    tab = 4;
+
+                }
                 if (tab2.contains(event.getX(), event.getY())) {
                     propMe();
 
@@ -543,15 +554,22 @@ public class LevelEditorView extends View {
 
 
                 if (button2.contains(event.getX(), event.getY())) {
-                    LevelSet s = Levels.getSet(TE.get(R.string.bundle_basic));
 
-                    if (!s.getLevels().contains(level))
-                        s.add(level);
+                    overlay.activate(new Runnable() {
+                        @Override
+                        public void run() {
+                            LevelSet s = Levels.getSet(TE.get(R.string.bundle_basic));
 
-                    Levels.updateLevel(level, true);
-                    if (place != null)
-                        place.start(null);
-                    view.finish();
+                            if (!s.getLevels().contains(level))
+                                s.add(level);
+
+                            Levels.updateLevel(level, true);
+                            if (place != null)
+                                place.start(null);
+                            view.finish();
+                        }
+                    },TE.get(R.string.overlay_editor_store_title),TE.get(R.string.overlay_editor_store_text));
+
                 }
 
                 if (button3.contains(event.getX(), event.getY())) {
@@ -576,7 +594,7 @@ public class LevelEditorView extends View {
                         public void run() {
                             overlay.closed = true;
                         }
-                    });
+                    },TE.get(R.string.overlay_editor_save_yes),TE.get(R.string.overlay_editor_save_no),TE.get(R.string.overlay_editor_save_title),TE.get(R.string.overlay_editor_save_text));
 
                 }
                 if (tab == 0) {

@@ -51,8 +51,8 @@ public class LevelChooser extends AppCompatActivity {
 
     public void openEditActivity(Level levelItem) {
         Intent level = new Intent(this, LevelEditor.class);
-        if(!levelItem.isEditable())
-            levelItem = new Level(levelItem.getName()+" (Copy)",10,20,30,levelItem.getNext(),true);
+       // if(!levelItem.isEditable())
+         //   levelItem = new Level(levelItem.getName()+" (Copy)",10,20,30,levelItem.getNext(),true);
         MainMenu.levelItem = levelItem;
         startActivity(level);
     }

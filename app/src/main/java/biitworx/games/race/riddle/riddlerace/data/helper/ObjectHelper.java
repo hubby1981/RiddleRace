@@ -81,7 +81,11 @@ public class ObjectHelper {
         Field[] fields = getDeclaredFields(clazz);
         for(Field f:fields){
             if(f.getName().equals(name))
+            {
+                f.setAccessible(true);
                 return f;
+
+            }
         }
         return null;
     }

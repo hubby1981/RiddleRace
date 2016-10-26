@@ -21,14 +21,10 @@ import android.widget.Button;
  */
 
 public class MainMenuView extends View {
-    public int greenLight = Color.argb(255, 100, 175, 130);
-    public int green = Color.argb(255, 50, 130, 70);
-    public int blueLight = Color.argb(255, 100, 160, 190);
-    public int blue = Color.argb(255, 50, 100, 130);
-    public int grayLight = Color.argb(255, 180, 180, 180);
-    public int gray = Color.argb(255, 120, 120, 120);
+
 
     public MainMenu menu;
+    OverlayWindow noEditor = new OverlayWindow(false);
 
     public MainMenuView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -43,6 +39,8 @@ public class MainMenuView extends View {
 
     @Override
     public void onDraw(Canvas canvas) {
+
+
         Rect inner = canvas.getClipBounds();
 
         Paint back = new Paint();
@@ -51,7 +49,7 @@ public class MainMenuView extends View {
 
         int h = inner.height() / 12;
         int w = inner.width() / 12;
-        Rect img = new Rect(inner.left + w, inner.top + w / 2, inner.right - w, (int) (inner.top + w / 1.5f) + (int)(h*1.25f) );
+        Rect img = new Rect(inner.left + w, inner.top + w / 2, inner.right - w, (int) (inner.top + w / 1.5f) + (int) (h * 1.25f));
         Bitmap logo = B.get(R.drawable.logo);
 
         canvas.drawRect(inner, back);
@@ -80,29 +78,30 @@ public class MainMenuView extends View {
         top += h * 1 + h;
 
 
-
         close = new RectF(inner.left + w, top, inner.right - w, top + h);
 
-        drawButton(canvas, setBasic, TE.get(R.string.menu_play), greenLight, green);
-        drawButton(canvas, tutorial, TE.get(R.string.menu_tutorial), blueLight, blue);
-        drawButton(canvas, options, TE.get(R.string.menu_options), blueLight, blue);
-        drawButton(canvas, shop, TE.get(R.string.menu_shop), blueLight, blue);
-        drawButton(canvas, editor, TE.get(R.string.menu_editor), blueLight, blue);
+        drawButton(canvas, setBasic, TE.get(R.string.menu_play), C.greenLight, C.green);
+        drawButton(canvas, tutorial, TE.get(R.string.menu_tutorial), C.blueLight, C.blue);
+        drawButton(canvas, options, TE.get(R.string.menu_options), C.blueLight, C.blue);
+        drawButton(canvas, shop, TE.get(R.string.menu_shop), C.blueLight, C.blue);
+        drawButton(canvas, editor, TE.get(R.string.menu_editor), C.blueLight, C.blue);
 
-        drawButton(canvas, close, TE.get(R.string.menu_close), blueLight, blue);
-
+        drawButton(canvas, close, TE.get(R.string.menu_close), C.blueLight, C.blue);
+        if (!noEditor.closed) {
+            noEditor.draw(canvas);
+        }
     }
 
     private void drawButton(Canvas canvas, RectF rc, String text, int light, int dark) {
         Paint button = new Paint();
         button.setStyle(Paint.Style.FILL_AND_STROKE);
         button.setColor(Color.argb(255, 50, 50, 50));
-        button.setShadowLayer(10, 0, 0, Color.BLACK);
+
         button.setShader(new RadialGradient(rc.centerX(), rc.centerY(), rc.width(), light, dark, Shader.TileMode.MIRROR));
         canvas.drawRoundRect(rc, rc.width() / 20, rc.width() / 20, button);
         button.setShader(new BitmapShader(MainMenu.back001, Shader.TileMode.MIRROR, Shader.TileMode.MIRROR));
         canvas.drawRoundRect(rc, rc.width() / 20, rc.width() / 20, button);
-        button.setStrokeWidth(4);
+        button.setStrokeWidth(6);
         button.setAntiAlias(true);
         button.setStyle(Paint.Style.STROKE);
         button.setShader(null);
@@ -122,11 +121,18 @@ public class MainMenuView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN && noEditor.closed) {
             if (setBasic.contains(event.getX(), event.getY())) {
                 MainMenu.edit = false;
 
                 Intent i = new Intent(menu, LevelChooser.class);
+                menu.startActivity(i);
+            }
+
+            if (shop.contains(event.getX(), event.getY())) {
+
+
+                Intent i = new Intent(menu, ShopView.class);
                 menu.startActivity(i);
             }
 
@@ -135,15 +141,46 @@ public class MainMenuView extends View {
                 menu.finish();
             }
             if (tutorial.contains(event.getX(), event.getY())) {
-
+                if (MainMenu.user.isEditor()) {
+                    MainMenu.user.setEditor();
+                    MainMenu.updateUser();
+                }
                 menu.sendMail();
             }
             if (editor.contains(event.getX(), event.getY())) {
-                MainMenu.edit = true;
 
-                Intent i = new Intent(menu, LevelChooser.class);
-                menu.startActivity(i);
+
+                if (MainMenu.user.isEditor()) {
+                    MainMenu.edit = true;
+
+                    Intent i = new Intent(menu, LevelChooser.class);
+                    menu.startActivity(i);
+                } else {
+                    noEditor.activate(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            MainMenu.edit = true;
+
+                            Intent i = new Intent(menu, LevelChooser.class);
+                            noEditor.closed = true;
+                            MainMenu.user.setEditor();
+                            MainMenu.updateUser();
+                            menu.startActivity(i);
+                        }
+                    }, new Runnable() {
+                        @Override
+                        public void run() {
+                            noEditor.closed = true;
+                        }
+                    }, TE.get(R.string.overlay_editor_buy_yes), TE.get(R.string.overlay_editor_buy_no), TE.get(R.string.overlay_editor_buy_title), TE.get(R.string.overlay_editor_buy_text));
+                    menu.update();
+                }
+
             }
+        } else {
+            noEditor.onTouchEvent(event);
+            menu.update();
         }
         return false;
     }

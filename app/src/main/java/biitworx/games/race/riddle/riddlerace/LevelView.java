@@ -38,12 +38,7 @@ public class LevelView extends View {
 
     public LevelChooser instance;
 
-    public int greenLight = Color.argb(255, 100, 175, 130);
-    public int green = Color.argb(255, 50, 130, 70);
-    public int blueLight = Color.argb(255, 100, 160, 190);
-    public int blue = Color.argb(255, 50, 100, 130);
-    public int grayLight = Color.argb(255, 180, 180, 180);
-    public int gray = Color.argb(255, 120, 120, 120);
+
     private HashMap<RectF, Game> games = new HashMap<>();
 
     private List<Level> all = new ArrayList<>();
@@ -71,13 +66,15 @@ public class LevelView extends View {
     private int getCollected() {
         int result = 0;
         for (Level l : subs) {
-            result += l.getScore()>=l.getMax()?3:l.getScore()>=l.getMed()?2:l.getScore()>=l.getMin()?1:0;
+            result += l.getScore() >= l.getMax() ? 3 : l.getScore() >= l.getMed() ? 2 : l.getScore() >= l.getMin() ? 1 : 0;
         }
         return result;
     }
+
     private int getStars() {
-        return (int)(subs.size()*2.5f);
+        return (int) (subs.size() * 2.5f);
     }
+
     @Override
     public void onDraw(Canvas canvas) {
         if (!edit) {
@@ -122,7 +119,7 @@ public class LevelView extends View {
         tp.setShadowLayer(4, 0, 0, Color.argb(200, 50, 50, 50));
 
 
-        String nn = edit?TE.get(R.string.menu_editor): TE.get(R.string.menu_level_view_title) +" "+ String.valueOf(getCollected()) + " / " + String.valueOf(getStars());
+        String nn = edit ? TE.get(R.string.menu_editor) : TE.get(R.string.menu_level_view_title) + " " + String.valueOf(getCollected()) + " / " + String.valueOf(getStars());
         float tw = tp.measureText(nn);
 
         canvas.drawText(nn, topper.centerX() - tw / 2, topper.centerY() - tw / 20, tp);
@@ -133,11 +130,11 @@ public class LevelView extends View {
         String text = TE.get(R.string.resource_menu_back);
         menu = next;
         Paint ap = new Paint();
-        ap.setShader(new RadialGradient(next.centerX(), next.centerY(), next.width(), blueLight, blue, Shader.TileMode.MIRROR));
+        ap.setShader(new RadialGradient(next.centerX(), next.centerY(), next.width(), C.blueLight, C.blue, Shader.TileMode.MIRROR));
 
         ap.setStyle(Paint.Style.FILL_AND_STROKE);
         ap.setColor(Color.argb(255, 50, 50, 50));
-        ap.setStrokeWidth(4);
+        ap.setStrokeWidth(6);
         ap.setAntiAlias(true);
         canvas.drawRoundRect(next, ne, ne, ap);
         ap.setShader(null);
@@ -205,16 +202,16 @@ public class LevelView extends View {
     private void doButton(Canvas canvas, int ne, RectF next, Paint ap, float py, int id) {
         String text;
         float apw;
-        int col1 = grayLight;
-        int col2 = gray;
+        int col1 = C.grayLight;
+        int col2 = C.gray;
 
         if (pageA > 0 && next.equals(this.prev)) {
-            col1 = blueLight;
-            col2 = blue;
+            col1 = C.blueLight;
+            col2 = C.blue;
         }
         if (pageA < pageMax && next.equals(this.next)) {
-            col1 = blueLight;
-            col2 = blue;
+            col1 = C.blueLight;
+            col2 = C.blue;
         }
 
 
@@ -222,7 +219,7 @@ public class LevelView extends View {
 
         ap.setStyle(Paint.Style.FILL_AND_STROKE);
         ap.setColor(Color.argb(255, 50, 50, 50));
-        ap.setStrokeWidth(4);
+        ap.setStrokeWidth(6);
         ap.setAntiAlias(true);
         canvas.drawRoundRect(next, ne, ne, ap);
         ap.setShader(null);
@@ -284,8 +281,8 @@ public class LevelView extends View {
             bAdd = true;
 
             if (level != null) {
-                tileBack.setColor(green);
-                tileBack.setShader(new RadialGradient(inner2.centerX(), inner2.centerY(), inner2.width(), greenLight, green, Shader.TileMode.MIRROR));
+                tileBack.setColor(C.green);
+                tileBack.setShader(new RadialGradient(inner2.centerX(), inner2.centerY(), inner2.width(), C.greenLight, C.green, Shader.TileMode.MIRROR));
 
 
             } else {
@@ -298,11 +295,11 @@ public class LevelView extends View {
                 }
 
                 if (bAdd && set.getLevels().size() >= index) {
-                    tileBack.setShader(new RadialGradient(inner2.centerX(), inner2.centerY(), inner2.width(), blueLight, blue, Shader.TileMode.MIRROR));
+                    tileBack.setShader(new RadialGradient(inner2.centerX(), inner2.centerY(), inner2.width(), C.blueLight, C.blue, Shader.TileMode.MIRROR));
                 } else {
-                    tileBack.setShader(new RadialGradient(inner2.centerX(), inner2.centerY(), inner2.width(), grayLight, gray, Shader.TileMode.MIRROR));
+                    tileBack.setShader(new RadialGradient(inner2.centerX(), inner2.centerY(), inner2.width(), C.grayLight, C.gray, Shader.TileMode.MIRROR));
                     bColor = false;
-                    bAdd=false;
+                    bAdd = false;
                 }
 
 
@@ -313,22 +310,22 @@ public class LevelView extends View {
 
 
                 if (level != null && level.getScore() >= level.getMin()) {
-                    tileBack.setColor(green);
+                    tileBack.setColor(C.green);
 
-                    tileBack.setShader(new RadialGradient(inner2.centerX(), inner2.centerY(), inner2.width(), greenLight, green, Shader.TileMode.MIRROR));
+                    tileBack.setShader(new RadialGradient(inner2.centerX(), inner2.centerY(), inner2.width(), C.greenLight, C.green, Shader.TileMode.MIRROR));
 
                 } else {
 
-                    tileBack.setColor(blue);
+                    tileBack.setColor(C.blue);
 
-                    tileBack.setShader(new RadialGradient(inner2.centerX(), inner2.centerY(), inner2.width(), blueLight, blue, Shader.TileMode.MIRROR));
+                    tileBack.setShader(new RadialGradient(inner2.centerX(), inner2.centerY(), inner2.width(), C.blueLight, C.blue, Shader.TileMode.MIRROR));
 
                 }
             } else {
 
-                tileBack.setColor(gray);
+                tileBack.setColor(C.gray);
 
-                tileBack.setShader(new RadialGradient(inner2.centerX(), inner2.centerY(), inner2.width(), grayLight, gray, Shader.TileMode.MIRROR));
+                tileBack.setShader(new RadialGradient(inner2.centerX(), inner2.centerY(), inner2.width(), C.grayLight, C.gray, Shader.TileMode.MIRROR));
 
 
             }
@@ -339,7 +336,7 @@ public class LevelView extends View {
         tileStroke.setStyle(Paint.Style.STROKE);
         tileStroke.setColor(Color.argb(255, 50, 50, 50));
         tileStroke.setAntiAlias(true);
-        tileStroke.setStrokeWidth(3);
+        tileStroke.setStrokeWidth(6);
 
       /* Paint back2 = new Paint();
         back2.setStyle(Paint.Style.FILL);
@@ -348,11 +345,15 @@ public class LevelView extends View {
         canvas.drawRoundRect(inner3, inner3.width() / 5, inner3.width() / 5, back2);*/
         //canvas.drawRoundRect(inner3, inner3.width() / 10, inner3.width() / 10, tileStroke);
 
+        //tileStroke.setShadowLayer(inner2.width() / 20, 0,0, Color.argb(255, 25,25,25));
+
+        canvas.drawRoundRect(inner2, inner2.width() / 10, inner2.width() / 10, tileStroke);
+        //tileStroke.setShadowLayer(0, 0, 0, Color.argb(128, 50, 50, 50));
 
         canvas.drawRoundRect(inner2, inner2.width() / 10, inner2.width() / 10, tileBack);
         tileBack.setShader(new BitmapShader(MainMenu.back001, Shader.TileMode.MIRROR, Shader.TileMode.MIRROR));
-
         canvas.drawRoundRect(inner2, inner2.width() / 10, inner2.width() / 10, tileBack);
+
 
         canvas.drawRoundRect(inner2, inner2.width() / 10, inner2.width() / 10, tileStroke);
 
