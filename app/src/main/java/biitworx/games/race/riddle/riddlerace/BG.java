@@ -15,7 +15,7 @@ import android.graphics.Shader;
 
 public class BG {
 
-    public static void drawText(Canvas canvas, Paint rc, RectF tab, String res, int color, boolean center, int seed) {
+    public static void drawText(Canvas canvas, Paint rc, RectF tab, String res, int color, boolean center, float seed) {
         String text = res;
         rc.setColor(color);
 
