@@ -79,14 +79,14 @@ public class ShopMenuView extends View {
 
         BG.drawText(canvas, text, state0,
                 MainMenu.user.isEditor()?TE.get(R.string.shop_state_1):TE.get(R.string.shop_state_0),
-                MainMenu.user.isEditor()?C.blueLight:C.redLight, true, 12);
+                MainMenu.user.isEditor()?C.greenLight:C.redLight, true, 12);
 
         BG.drawText(canvas, text, state1,
                 MainMenu.user.isAds()?TE.get(R.string.shop_state_1):TE.get(R.string.shop_state_0),
-                MainMenu.user.isAds()?C.blueLight:C.redLight, true, 12);
+                MainMenu.user.isAds()?C.greenLight:C.redLight, true, 12);
         BG.drawText(canvas, text, state2,
                 MainMenu.user.isCommunity()?TE.get(R.string.shop_state_1):TE.get(R.string.shop_state_0),
-                MainMenu.user.isCommunity()?C.blueLight:C.redLight, true, 12);
+                MainMenu.user.isCommunity()?C.greenLight:C.redLight, true, 12);
     }
 
 
