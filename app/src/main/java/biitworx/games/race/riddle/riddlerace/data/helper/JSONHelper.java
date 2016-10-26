@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by marcel.weissgerber on 26.10.2016.
@@ -79,6 +80,9 @@ public class JSONHelper {
                     }
                     else if(invert.getType()==Float.class || invert.getType()==float.class){
                         insert = Float.parseFloat(value);
+                    }
+                    else if(invert.getType()==UUID.class){
+                        insert = UUID.fromString(value);
                     }
                     else{
                         insert=value;
