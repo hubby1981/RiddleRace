@@ -65,7 +65,11 @@ public class PlacementCircleView extends View {
 
     @Override
     public void onDraw(Canvas canvas) {
-        drawMe(canvas, canvas.getClipBounds());
+        try {
+            drawMe(canvas, canvas.getClipBounds());
+        } catch (Exception e) {
+
+        }
     }
 
     public void drawMe(Canvas canvas, Rect outer) {
@@ -319,7 +323,7 @@ public class PlacementCircleView extends View {
 
                     for (Map.Entry<CircleView, Rect> item : hiter.entrySet()) {
                         if (item.getKey().hit && !item.getValue().contains(x, y))
-                           item.getKey().hitMe();
+                            item.getKey().hitMe();
                     }
 
                     for (Map.Entry<CircleView, Rect> item : hiter.entrySet()) {
@@ -343,8 +347,7 @@ public class PlacementCircleView extends View {
                                 int xx = s.getLevels().indexOf(level) + 1;
                                 if (xx < s.getLevels().size()) {
                                     MainMenu.that.openActivity(s.getLevels().get(xx));
-                                }
-                                else {
+                                } else {
                                     clean();
                                 }
                             } else {

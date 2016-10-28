@@ -17,7 +17,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 import biitworx.games.race.riddle.riddlerace.data.helper.DbHelper;
 import biitworx.games.race.riddle.riddlerace.data.helper.JSONHelper;
@@ -55,6 +58,13 @@ public class MainMenu extends AppCompatActivity {
         if (view != null)
             view.menu = this;
 
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                update();
+            }
+        },500,50);
+
     }
 
 
@@ -62,7 +72,9 @@ public class MainMenu extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                findViewById(R.id.viewMenu).invalidate();
+                try{
+                findViewById(R.id.viewMenu).invalidate();}
+                catch (Exception e){}
             }
         });
     }

@@ -18,28 +18,28 @@ import java.util.UUID;
 public class JSONHelper {
 
 
-    public static JSONObject mapFromObject(Object  data){
+    public static JSONObject mapFromObject(Object data) {
 
-        HashMap<String,String> fields = ObjectHelper.getFields(data);
-        HashMap<String,DbReference> refs = ObjectHelper.getReferencesEx(data.getClass());
-        JSONObject result=new JSONObject();
-        for(Map.Entry<String,String>field:fields.entrySet()){
+        HashMap<String, String> fields = ObjectHelper.getFields(data);
+        HashMap<String, DbReference> refs = ObjectHelper.getReferencesEx(data.getClass());
+        JSONObject result = new JSONObject();
+        for (Map.Entry<String, String> field : fields.entrySet()) {
 
             try {
-                result.put(field.getKey(),field.getValue());
+                result.put(field.getKey(), field.getValue());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
-        for(Map.Entry<String,DbReference> ref:refs.entrySet()){
+        for (Map.Entry<String, DbReference> ref : refs.entrySet()) {
             JSONArray array = new JSONArray();
             try {
 
 
-                List<Object> items = (List<Object>)  ObjectHelper.getDeclaredFieldByName(data.getClass(),ref.getKey()).get(data);
-                if(items!=null){
-                    for(Object item:items){
+                List<Object> items = (List<Object>) ObjectHelper.getDeclaredFieldByName(data.getClass(), ref.getKey()).get(data);
+                if (items != null) {
+                    for (Object item : items) {
                         array.put(mapFromObject(item));
                     }
                 }
@@ -48,7 +48,7 @@ public class JSONHelper {
             }
 
             try {
-                result.put(ref.getKey(),array);
+                result.put(ref.getKey(), array);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -56,57 +56,54 @@ public class JSONHelper {
         return result;
     }
 
-    public static <T> T mapToObject(Class<T> tClass,JSONObject json){
+    public static <T> T mapToObject(Class<T> tClass, JSONObject json) {
         try {
             T result = tClass.newInstance();
-            HashMap<String,String> fields = ObjectHelper.getFields(result);
-            HashMap<String,DbReference> refs = ObjectHelper.getReferencesEx(tClass);
+            HashMap<String, String> fields = ObjectHelper.getFields(result);
+            HashMap<String, DbReference> refs = ObjectHelper.getReferencesEx(tClass);
 
-            for(Map.Entry<String,String>field:fields.entrySet()){
-                Field invert = ObjectHelper.getDeclaredFieldByName(tClass,field.getKey());
-                if(invert!=null){
+            for (Map.Entry<String, String> field : fields.entrySet()) {
+                Field invert = ObjectHelper.getDeclaredFieldByName(tClass, field.getKey());
+                if (invert != null) {
                     String value = null;
                     try {
                         value = json.getString(field.getKey());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    Object insert=null;
-                    if(invert.getType()==Boolean.class || invert.getType()==boolean.class){
-                        insert = Boolean.parseBoolean(value);
+                    Object insert = null;
+                    if (invert.getType() == Boolean.class || invert.getType() == boolean.class) {
+                        insert = value != null ? Boolean.parseBoolean(value) : false;
+                    } else if (invert.getType() == Integer.class || invert.getType() == int.class) {
+
+                        insert = value != null ? Integer.parseInt(value) : 0;
+                    } else if (invert.getType() == Float.class || invert.getType() == float.class) {
+                        insert = value != null ? Float.parseFloat(value) : 0f;
+                    } else if (invert.getType() == UUID.class) {
+                        insert = value != null ? UUID.fromString(value) : null;
+                    } else {
+                        insert = value;
                     }
-                    else if(invert.getType()==Integer.class || invert.getType()==int.class){
-                        insert = Integer.parseInt(value);
-                    }
-                    else if(invert.getType()==Float.class || invert.getType()==float.class){
-                        insert = Float.parseFloat(value);
-                    }
-                    else if(invert.getType()==UUID.class){
-                        insert = UUID.fromString(value);
-                    }
-                    else{
-                        insert=value;
-                    }
-                    if(insert!=null)
-                        invert.set(result,insert);
+                    if (insert != null)
+                        invert.set(result, insert);
                 }
             }
-            for(Map.Entry<String,DbReference> ref:refs.entrySet()){
+            for (Map.Entry<String, DbReference> ref : refs.entrySet()) {
                 try {
                     JSONArray array = json.getJSONArray(ref.getKey());
-                    if(array!=null){
+                    if (array != null) {
                         List<Object> items = new ArrayList<>();
-                        for(int i=0;i<array.length();i++){
+                        for (int i = 0; i < array.length(); i++) {
                             JSONObject id = array.getJSONObject(i);
-                            if(id!=null){
-                               Object o=  mapToObject(ref.getValue().items(),id);
-                                if(o!=null){
+                            if (id != null) {
+                                Object o = mapToObject(ref.getValue().items(), id);
+                                if (o != null) {
                                     items.add(o);
                                 }
                             }
                         }
-                        if(items.size()>0){
-                            ObjectHelper.getDeclaredFieldByName(tClass,ref.getKey()).set(result,items);
+                        if (items.size() > 0) {
+                            ObjectHelper.getDeclaredFieldByName(tClass, ref.getKey()).set(result, items);
                         }
                     }
                 } catch (JSONException e) {

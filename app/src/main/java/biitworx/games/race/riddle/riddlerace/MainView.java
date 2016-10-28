@@ -1,6 +1,5 @@
 package biitworx.games.race.riddle.riddlerace;
 
-import android.graphics.Canvas;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,7 +7,6 @@ import android.os.Bundle;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.ThreadFactory;
 
 import biitworx.games.race.riddle.riddlerace.data.helper.poco.Circle;
 import biitworx.games.race.riddle.riddlerace.data.helper.poco.Level;
@@ -157,7 +155,7 @@ public abstract class MainView extends AppCompatActivity {
         addPlacement(place);
 
         for (Circle c : level.getCircles()) {
-            place.addAll(new CircleView(place, Levels.getRedArray()[c.getColor()], Levels.getGreenArray()[c.getColor()], Levels.getBlueArray()[c.getColor()], c.getMover(), c.getPosx(), c.getPosy(), c.getDirection(), c.getLength(), c.getInverse(), c.getPosition(), c.getNext(), c.getFaktor(), c.getFreaky()));
+            place.addAll(new CircleView(place, C.getRedArray()[c.getColor()], C.getGreenArray()[c.getColor()], C.getBlueArray()[c.getColor()], c.getMover(), c.getPosx(), c.getPosy(), c.getDirection(), c.getLength(), c.getInverse(), c.getPosition(), c.getNext(), c.getFaktor(), c.getFreaky()));
         }
         return place;
     }

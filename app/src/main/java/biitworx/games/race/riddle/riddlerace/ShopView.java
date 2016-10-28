@@ -14,4 +14,13 @@ public class ShopView extends AppCompatActivity {
         ShopMenuView shop = (ShopMenuView)findViewById(R.id.shop);
         shop.shop = this;
     }
+
+    public void update(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                findViewById(R.id.shop).invalidate();
+            }
+        });
+    }
 }

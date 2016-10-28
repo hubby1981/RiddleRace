@@ -5,6 +5,7 @@ import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
@@ -23,7 +24,24 @@ public class BG {
         canvas.drawText(text, center ? tab.centerX() - (wt / 2) : tab.left + tab.width() / 30, tab.centerY() + tab.height() / seed, rc);
     }
 
-    public static int buildStdBackground(Canvas canvas,Rect inner) {
+    public static void drawPathTab(Canvas canvas, RectF rc, Paint p) {
+      /*  Path p1 = new Path();
+        p1.moveTo(rc.left, rc.top);/*
+        p1.lineTo(rc.left+rc.height()/4, rc.top);
+        p1.lineTo((rc.left+rc.height()/4)+rc.height()/8, rc.top+rc.height()/8);
+
+        p1.lineTo(rc.right, rc.top+rc.height()/8);
+
+        p1.lineTo(rc.right, rc.top);
+
+        p1.lineTo(rc.right, rc.bottom);
+        p1.lineTo(rc.left, rc.bottom);
+        p1.lineTo(rc.left, rc.top);
+        p1.close();*/
+        canvas.drawRect(rc,p);
+    }
+
+    public static int buildStdBackground(Canvas canvas, Rect inner) {
 
         Paint back = new Paint();
         back.setStyle(Paint.Style.FILL);

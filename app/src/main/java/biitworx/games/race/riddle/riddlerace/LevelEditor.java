@@ -39,6 +39,15 @@ public class LevelEditor extends AppCompatActivity {
         }, 1000, 50);
     }
 
+    public void update(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                findViewById(R.id.editor).invalidate();
+            }
+        });
+    }
+
 
 
 }

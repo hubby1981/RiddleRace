@@ -16,6 +16,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * Created by marcel.weissgerber on 17.10.2016.
  */
@@ -156,17 +159,26 @@ public class MainMenuView extends View {
                     Intent i = new Intent(menu, LevelChooser.class);
                     menu.startActivity(i);
                 } else {
+                    setLayerType(LAYER_TYPE_SOFTWARE,null);
                     noEditor.activate(new Runnable() {
                         @Override
                         public void run() {
+                            new Timer().schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    MainMenu.edit = true;
+                             
 
-                            MainMenu.edit = true;
+                                    Intent i = new Intent(menu, LevelChooser.class);
+                                    noEditor.closed = true;
+                                    MainMenu.user.setEditor();
+                                    MainMenu.updateUser();
+                                    menu.startActivity(i);
 
-                            Intent i = new Intent(menu, LevelChooser.class);
-                            noEditor.closed = true;
-                            MainMenu.user.setEditor();
-                            MainMenu.updateUser();
-                            menu.startActivity(i);
+
+                                }
+                            }, 1500);
+
                         }
                     }, new Runnable() {
                         @Override

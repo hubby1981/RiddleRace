@@ -24,10 +24,12 @@ public class LevelSet extends BaseDataObject {
     private String name = "";
     @DbField(name = "stars")
     private int stars = 0;
-    @DbField(name = "collected")
-    private int collected = 0;
     @DbField(name = "editable")
     private boolean editable = false;
+    @DbField(name = "pn")
+    private int pageNormal = 0;
+    @DbField(name = "pe")
+    private int pageEdit = 0;
 
     public LevelSet() {
 
@@ -54,20 +56,6 @@ public class LevelSet extends BaseDataObject {
 
     }
 
-    public int getCollected() {
-        return collected;
-    }
-
-    public void setCollected(int collected) {
-        this.collected = collected;
-    }
-
-    public int getStars() {
-        return getLevels() != null && getLevels().size() > 0 ?
-                (int) (getLevels().size() * 2.5f) :
-                0;
-    }
-
     public String getName() {
         return name;
     }
@@ -78,5 +66,21 @@ public class LevelSet extends BaseDataObject {
 
     public boolean isEditable() {
         return editable;
+    }
+
+    public int getPageNormal() {
+        return pageNormal;
+    }
+
+    public void setPageNormal(int pageNormal) {
+        this.pageNormal = pageNormal;
+    }
+
+    public int getPageEdit() {
+        return pageEdit;
+    }
+
+    public void setPageEdit(int pageEdit) {
+        this.pageEdit = pageEdit;
     }
 }
