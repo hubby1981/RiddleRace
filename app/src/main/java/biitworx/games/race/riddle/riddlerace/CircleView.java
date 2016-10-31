@@ -17,6 +17,7 @@ public class CircleView {
     public int ccNext = 20;
     public Paint carLine = new Paint();
     public Paint carLine2 = new Paint();
+    public Paint carLine3 = new Paint();
 
     private int position = 0;
     private float mover = 6;
@@ -43,7 +44,9 @@ public class CircleView {
 
         carLine.setStyle(Paint.Style.FILL);
         carLine.setAntiAlias(true);
-
+        carLine3.setStyle(Paint.Style.FILL);
+        carLine3.setAntiAlias(true);
+        carLine3.setColor(Color.argb(128,255,255,255));
         carLine2.setStyle(Paint.Style.STROKE);
         carLine2.setAntiAlias(true);
         carLine2.setColor(Color.argb(128, 50, 50, 50));
@@ -154,6 +157,8 @@ public class CircleView {
 
         int p = position;
         if (count == 0) {
+
+
             for (int i = 0; i < length; i++) {
                 Rect rc1 = drawWithDegree(p, distance2, rc2);
 

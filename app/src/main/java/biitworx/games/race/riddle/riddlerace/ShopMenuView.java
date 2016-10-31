@@ -71,20 +71,20 @@ public class ShopMenuView extends View {
         back.setColor(Color.argb(75, 50, 50, 50));
         back.setStyle(Paint.Style.FILL);
 
-        canvas.drawRoundRect(item0, cw, cw, back);
-        canvas.drawRoundRect(item1, cw, cw, back);
-        canvas.drawRoundRect(item2, cw, cw, back);
+        canvas.drawRoundRect(item0, cw*2, cw*2, back);
+        canvas.drawRoundRect(item1, cw*2, cw*2, back);
+        canvas.drawRoundRect(item2, cw*2, cw*2, back);
         back.setColor(Color.argb(255, 50, 50, 50));
 
         back.setStyle(Paint.Style.STROKE);
         back.setStrokeWidth(6);
-        canvas.drawRoundRect(item0, cw, cw, back);
-        canvas.drawRoundRect(item1, cw, cw, back);
-        canvas.drawRoundRect(item2, cw, cw, back);
+        canvas.drawRoundRect(item0, cw*2, cw*2, back);
+        canvas.drawRoundRect(item1, cw*2, cw*2, back);
+        canvas.drawRoundRect(item2, cw*2, cw*2, back);
         text.setUnderlineText(true);
-        BG.drawText(canvas, text, item0, TE.get(R.string.shop_buy_item_0), Color.argb(255, 225, 225, 225), false, 12);
-        BG.drawText(canvas, text, item1, TE.get(R.string.shop_buy_item_1), Color.argb(255, 225, 225, 225), false, 12);
-        BG.drawText(canvas, text, item2, TE.get(R.string.shop_buy_item_2), Color.argb(255, 225, 225, 225), false, 12);
+        BG.drawText(canvas, text, item0, TE.get(R.string.shop_buy_item_0), Color.argb(255, 255, 255, 255), false, 12);
+        BG.drawText(canvas, text, item1, TE.get(R.string.shop_buy_item_1), Color.argb(255, 255, 255, 255), false, 12);
+        BG.drawText(canvas, text, item2, TE.get(R.string.shop_buy_item_2), Color.argb(255, 255, 255, 255), false, 12);
 
 
         text.setTextSize(title.height() / 4.5f);
@@ -116,7 +116,7 @@ public class ShopMenuView extends View {
         }
 
         RectF bottom = new RectF(inner.left+inner.width()/10, inner.bottom - inner.height() / 8, inner.right-inner.width()/10, inner.bottom);
-        menu=backButton(canvas, bottom, bottom.height() / 10);
+        menu=backButton(canvas, bottom,cw);
 
         overlay.draw(canvas);
 

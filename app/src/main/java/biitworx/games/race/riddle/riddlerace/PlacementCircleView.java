@@ -127,8 +127,12 @@ public class PlacementCircleView extends View {
                 color = 20;
 
 
+
+
             circleLine.setColor(Color.argb(color, item.getKey().red, item.getKey().green, item.getKey().blue));
             canvas.drawCircle(rc.exactCenterX(), rc.exactCenterY(), rc.width() / fk1, circleLine);
+
+
             circleLine.setColor(Color.argb(color / 2, 255, 255, 255));
             canvas.drawCircle(rc.exactCenterX(), rc.exactCenterY(), rc.width() / fk1, circleLine);
 
