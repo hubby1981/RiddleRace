@@ -197,7 +197,7 @@ public class PlacementCircleView extends View {
         p1.setColor(Color.DKGRAY);
         p1.setFakeBoldText(true);
         p1.setAntiAlias(true);
-        String text = name;
+        String text = "Level - "+name;
         float wt = p1.measureText(text);
         canvas.drawText(text, rcTop.exactCenterX() - wt / 2, rcTop.exactCenterY(), p1);
         if (level != null)

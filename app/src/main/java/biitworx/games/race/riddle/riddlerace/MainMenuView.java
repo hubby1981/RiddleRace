@@ -70,8 +70,8 @@ public class MainMenuView extends View {
         editor = new RectF(inner.left + w, top, inner.right - w, top + h);
         top += h * 1 + h / 8;
 
-        options = new RectF(inner.left + w, top, inner.right - w, top + h);
-        top += h * 1 + h / 8;
+        //options = new RectF(inner.left + w, top, inner.right - w, top + h);
+        //top += h * 1 + h / 8;
 
         shop = new RectF(inner.left + w, top, inner.right - w, top + h);
         top += h * 1 + h / 8;
@@ -85,7 +85,7 @@ public class MainMenuView extends View {
 
         drawButton(canvas, setBasic, TE.get(R.string.menu_play), C.greenLight, C.green);
         drawButton(canvas, tutorial, TE.get(R.string.menu_tutorial), C.blueLight, C.blue);
-        drawButton(canvas, options, TE.get(R.string.menu_options), C.blueLight, C.blue);
+        //drawButton(canvas, options, TE.get(R.string.menu_options), C.blueLight, C.blue);
         drawButton(canvas, shop, TE.get(R.string.menu_shop), C.blueLight, C.blue);
         drawButton(canvas, editor, TE.get(R.string.menu_editor), C.blueLight, C.blue);
 

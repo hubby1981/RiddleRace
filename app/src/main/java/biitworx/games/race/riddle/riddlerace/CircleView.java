@@ -19,7 +19,7 @@ public class CircleView {
     public Paint carLine2 = new Paint();
     public Paint carLine3 = new Paint();
 
-    private int position = 0;
+    private float position = 0;
     private float mover = 6;
     private int posx = 0;
     private int posy = 0;
@@ -155,7 +155,7 @@ public class CircleView {
                 rc.right + (int) ((distance) * rad),
                 rc.bottom + (int) ((distance) * rad));
 
-        int p = position;
+        float p = position;
         if (count == 0) {
 
 
@@ -199,7 +199,7 @@ public class CircleView {
         }
 
         if (hit) {
-            float mm = 1f;
+            float mm = 0.33f;
             if (inverse == 0) {
                 position += mm;
             } else {
@@ -259,7 +259,7 @@ public class CircleView {
     }
 
 
-    private Rect drawWithDegree(int degree, float size, Rect display) {
+    private Rect drawWithDegree(float degree, float size, Rect display) {
         float xc1 = (float) Math.sin(Math.toRadians(degree)) * (float) (display.width() / 3.5);
         float yc1 = (float) Math.cos(Math.toRadians(degree)) * (float) (display.width() / 3.5);
         float x = display.exactCenterX() + xc1;
