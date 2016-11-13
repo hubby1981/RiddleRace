@@ -32,7 +32,10 @@
         <activity
             android:name=".LevelEditor"
             android:screenOrientation="portrait" />
-        <activity android:name=".ShopView"  android:screenOrientation="portrait" ></activity>
+        <activity
+            android:name=".ShopView"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Tutorial"  android:screenOrientation="portrait" ></activity>
     </application>
 
 </manifest>
