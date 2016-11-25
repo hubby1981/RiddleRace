@@ -127,8 +127,6 @@ public class PlacementCircleView extends View {
                 color = 20;
 
 
-
-
             circleLine.setColor(Color.argb(color, item.getKey().red, item.getKey().green, item.getKey().blue));
             canvas.drawCircle(rc.exactCenterX(), rc.exactCenterY(), rc.width() / fk1, circleLine);
 
@@ -175,8 +173,8 @@ public class PlacementCircleView extends View {
             if (allViews().size() > 0) {
                 circlesDraw(canvas, inner);
                 for (CircleView v : allViews()) {
-
-                    v.drawMe(canvas, count);
+                    if (v != null)
+                        v.drawMe(canvas, count);
                 }
             }
         }
@@ -197,7 +195,7 @@ public class PlacementCircleView extends View {
         p1.setColor(Color.DKGRAY);
         p1.setFakeBoldText(true);
         p1.setAntiAlias(true);
-        String text = "Level - "+name;
+        String text = "Level - " + name;
         float wt = p1.measureText(text);
         canvas.drawText(text, rcTop.exactCenterX() - wt / 2, rcTop.exactCenterY(), p1);
         if (level != null)
@@ -205,39 +203,40 @@ public class PlacementCircleView extends View {
         float wt2 = p1.measureText(text);
         canvas.drawText(text, rcTop.exactCenterX() - wt2 / 2, rcTop.exactCenterY() + p1.getTextSize(), p1);
         for (CircleView v : allViews()) {
-            Rect rc = new Rect(rcBottom.left + (index * w), rcBottom.top, rcBottom.left + ((index + 1) * w), rcBottom.bottom);
-            hiter.put(v, rc);
-            //canvas.drawRect(rc, v.carLine);
-            int si = (4 * 9) / allViews().size();//allViews().size() > 6 ? 4 : allViews().size() > 5 ? 6 : allViews().size() > 3 ? 8 : allViews().size() > 2 ? 12 : 16;
-            int w1 = rc.width() / si;
-            int h1 = rc.height() / 4;
-            if (v.hit && !crashed) {
-                Path pp = new Path();
+            if (v != null) {
+                Rect rc = new Rect(rcBottom.left + (index * w), rcBottom.top, rcBottom.left + ((index + 1) * w), rcBottom.bottom);
+                hiter.put(v, rc);
+                //canvas.drawRect(rc, v.carLine);
+                int si = (4 * 9) / allViews().size();//allViews().size() > 6 ? 4 : allViews().size() > 5 ? 6 : allViews().size() > 3 ? 8 : allViews().size() > 2 ? 12 : 16;
+                int w1 = rc.width() / si;
+                int h1 = rc.height() / 4;
+                if (v.hit && !crashed) {
+                    Path pp = new Path();
 
-                pp.moveTo(rc.centerX() + w1, rc.centerY());
-                pp.lineTo(rc.centerX() - w1, rc.centerY() - h1);
-                pp.lineTo(rc.centerX() - w1, rc.centerY() + h1);
-                pp.moveTo(rc.centerX() + w1, rc.centerY());
-                pp.close();
-                canvas.drawPath(pp, v.carLine);
-            } else {
-                Rect rc1 = new Rect(rc.centerX() - w1, rc.centerY() - h1, rc.centerX() - w1 / 4, rc.centerY() + h1);
-                Rect rc2 = new Rect(rc.centerX() + w1 / 4, rc.centerY() - h1, rc.centerX() + w1, rc.centerY() + h1);
+                    pp.moveTo(rc.centerX() + w1, rc.centerY());
+                    pp.lineTo(rc.centerX() - w1, rc.centerY() - h1);
+                    pp.lineTo(rc.centerX() - w1, rc.centerY() + h1);
+                    pp.moveTo(rc.centerX() + w1, rc.centerY());
+                    pp.close();
+                    canvas.drawPath(pp, v.carLine);
+                } else {
+                    Rect rc1 = new Rect(rc.centerX() - w1, rc.centerY() - h1, rc.centerX() - w1 / 4, rc.centerY() + h1);
+                    Rect rc2 = new Rect(rc.centerX() + w1 / 4, rc.centerY() - h1, rc.centerX() + w1, rc.centerY() + h1);
 
-                canvas.drawRect(rc1, v.carLine);
-                canvas.drawRect(rc2, v.carLine);
+                    canvas.drawRect(rc1, v.carLine);
+                    canvas.drawRect(rc2, v.carLine);
+                }
+
+                Paint p = new Paint();
+                p.setStyle(Paint.Style.STROKE);
+                p.setTextSize(rc.height() / 4);
+                p.setColor(v.carLine.getColor());
+                p.setFakeBoldText(true);
+                p.setAntiAlias(true);
+                String tt = String.valueOf(v.round);
+                float tw = p.measureText(tt);
+                canvas.drawText(tt, rc.exactCenterX() - tw / 2, rc.top - p.getStrokeWidth() * 8, p);
             }
-
-            Paint p = new Paint();
-            p.setStyle(Paint.Style.STROKE);
-            p.setTextSize(rc.height() / 4);
-            p.setColor(v.carLine.getColor());
-            p.setFakeBoldText(true);
-            p.setAntiAlias(true);
-            String tt = String.valueOf(v.round);
-            float tw = p.measureText(tt);
-            canvas.drawText(tt, rc.exactCenterX() - tw / 2, rc.top - p.getStrokeWidth() * 8, p);
-
             index++;
         }
     }

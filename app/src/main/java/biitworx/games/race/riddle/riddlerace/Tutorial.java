@@ -30,6 +30,6 @@ public class Tutorial extends AppCompatActivity {
                     }
                 });
             }
-        },50,50);
+        },15,15);
     }
 }

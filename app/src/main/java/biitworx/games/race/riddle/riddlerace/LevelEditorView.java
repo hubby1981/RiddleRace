@@ -654,7 +654,7 @@ public class LevelEditorView extends View {
     }
 
 
-    private Holder getHolder(Point p) {
+    public static Holder getHolder(Point p) {
 
         //first row
         if (p.x == 0 && p.y == 0) {
@@ -765,7 +765,7 @@ public class LevelEditorView extends View {
     }
 
 
-    class Holder {
+    static class Holder {
         public Holder(int x, int y, int direction) {
             this.x = x;
             this.y = y;
