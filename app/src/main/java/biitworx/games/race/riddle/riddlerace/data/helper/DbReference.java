@@ -5,4 +5,6 @@ package biitworx.games.race.riddle.riddlerace.data.helper;
  */
 public @interface DbReference {
     Class items();
+
+
 }

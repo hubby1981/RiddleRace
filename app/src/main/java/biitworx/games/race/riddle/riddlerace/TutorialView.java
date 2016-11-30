@@ -21,7 +21,7 @@ import java.util.TimerTask;
 public class TutorialView extends View {
     private Timer timer = new Timer();
     private boolean move = false;
-    private String text1 = "";
+    private String text1 = "Test";
 
     public TutorialView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -37,6 +37,7 @@ public class TutorialView extends View {
             public void run() {
                 LevelEditorView.Holder h = LevelEditorView.getHolder(new Point(0, 3));
                 place.addAll(createView(C.getRedArray()[0], C.getGreenArray()[0], C.getBlueArray()[0], 1, h.x, h.y, h.direction, 1, 0, 270, 0, 2, 0));
+                text1 = "First Circle";
 
             }
         }, 5000);
@@ -46,6 +47,8 @@ public class TutorialView extends View {
                 LevelEditorView.Holder h = LevelEditorView.getHolder(new Point(4, 3));
 
                 place.addAll(createView(C.getRedArray()[1], C.getGreenArray()[1], C.getBlueArray()[1], 1, h.x, h.y, h.direction, 1, 1, 90, 0, 2, 0));
+                text1 = "Second Circle";
+
 
             }
         }, 10000);
@@ -54,6 +57,8 @@ public class TutorialView extends View {
             @Override
             public void run() {
                 move = true;
+                text1 = "";
+
             }
         }, 30000);
     }
@@ -103,16 +108,22 @@ public class TutorialView extends View {
         RectF inner = new RectF(canvas.getClipBounds());
 
         RectF title = new RectF(inner.left, inner.top + inner.height() / 10, inner.right, inner.top + (inner.height() / 10) * 2);
+        RectF texte = new RectF(inner.left, title.bottom, inner.right, title.bottom + (inner.height() / 10));
+
         Paint text = new Paint();
         text.setTextSize(title.height() / 3f);
         text.setFakeBoldText(true);
         text.setStyle(Paint.Style.FILL);
         BG.drawText(canvas, text, title, TE.get(R.string.tutorial_title), Color.argb(255, 50, 50, 50), true, 1.5f);
 
+        text.setTextSize(title.height() / 4f);
+
+        BG.drawText(canvas, text, texte, text1, Color.argb(255, 50, 50, 50), true, 5f);
+
         Rect content = new Rect((int) (inner.left + inner.width() / 10), (int) (inner.top + (inner.height() / 10) * 3), (int) (inner.right - inner.width() / 10), (int) (inner.bottom - (inner.height() / 10) * 1));
 
-        if (place != null ) {
-            if(move==true)
+        if (place != null) {
+            if (move == true)
                 for (CircleView circleView : place.allViews()) {
                     circleView.move();
                 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="app_name">Riddle Racer</string>
     <string name="resource_menu_back">Zurück zum Menu</string>
 
     <string name="resource_menu_prev">Vorher</string>
@@ -48,4 +48,5 @@
     <string name="crashed_retry">Neustart</string>
     <string name="crashed_abort">Abbruch</string>
     <string name="crashed_next">Nächstes</string>
+
 </resources>

@@ -20,7 +20,7 @@ public class JSONHelper {
 
     public static JSONObject mapFromObject(Object data) {
 
-        HashMap<String, String> fields = ObjectHelper.getFields(data);
+        HashMap<String, String> fields = ObjectHelper.getFieldsJsonIgnore(data);
         HashMap<String, DbReference> refs = ObjectHelper.getReferencesEx(data.getClass());
         JSONObject result = new JSONObject();
         for (Map.Entry<String, String> field : fields.entrySet()) {
@@ -59,7 +59,7 @@ public class JSONHelper {
     public static <T> T mapToObject(Class<T> tClass, JSONObject json) {
         try {
             T result = tClass.newInstance();
-            HashMap<String, String> fields = ObjectHelper.getFields(result);
+            HashMap<String, String> fields = ObjectHelper.getFieldsJsonIgnore(result);
             HashMap<String, DbReference> refs = ObjectHelper.getReferencesEx(tClass);
 
             for (Map.Entry<String, String> field : fields.entrySet()) {

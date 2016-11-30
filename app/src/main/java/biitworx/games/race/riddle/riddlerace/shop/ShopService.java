@@ -8,6 +8,8 @@ import java.math.BigDecimal;
 public interface ShopService<Api> {
 
     boolean buy(String item);
-    BigDecimal price(String item);
+
+    String price(String item);
+
     Api get();
 }

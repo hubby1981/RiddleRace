@@ -2,11 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="biitworx.games.race.riddle.riddlerace">
 
-    <!--
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.camera.autofocus"/>
-    -->
+    <uses-permission android:name="com.android.vending.BILLING" />
     <application
         android:allowBackup="true"
         android:configChanges="orientation|keyboardHidden|screenSize"
@@ -36,6 +32,7 @@
             android:name=".ShopView"
             android:screenOrientation="portrait" />
         <activity android:name=".Tutorial"  android:screenOrientation="portrait" ></activity>
+
     </application>
 
 </manifest>

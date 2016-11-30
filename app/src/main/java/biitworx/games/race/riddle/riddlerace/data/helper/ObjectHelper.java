@@ -44,6 +44,22 @@ public class ObjectHelper {
         return result;
     }
 
+    public static HashMap<String, String> getFieldsJsonIgnore(Object object) {
+        Field[] fields = getDeclaredFields(object.getClass());
+        HashMap<String, String> result = new HashMap<>();
+        for (Field f : fields) {
+            if (f.isAnnotationPresent(DbField.class) && !f.isAnnotationPresent(JsonIgnore.class)) {
+                try {
+                    f.setAccessible(true);
+                    result.put(f.getName(), f.get(object).toString());
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result;
+    }
+
     public static HashMap<String,DbReference> getReferences(Object object) {
         Field[] fields = getDeclaredFields(object.getClass());
         HashMap<String,DbReference> result = new HashMap<>();

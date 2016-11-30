@@ -11,6 +11,7 @@ import java.util.TimerTask;
 import biitworx.games.race.riddle.riddlerace.data.helper.poco.Circle;
 import biitworx.games.race.riddle.riddlerace.data.helper.poco.Level;
 import biitworx.games.race.riddle.riddlerace.data.helper.poco.Levels;
+import biitworx.games.race.riddle.riddlerace.shop.GoogleShopService;
 
 public abstract class MainView extends AppCompatActivity {
 
@@ -23,6 +24,7 @@ public abstract class MainView extends AppCompatActivity {
 
     private ArrayList<CircleView> views = new ArrayList<>();
     private PlacementCircleView place;
+
 
     public void add(CircleView view) {
         views.add(view);
@@ -38,6 +40,7 @@ public abstract class MainView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         initViews();
         update = new Runnable() {
             @Override

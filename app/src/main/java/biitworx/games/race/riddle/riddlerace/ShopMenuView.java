@@ -15,6 +15,8 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 
+import biitworx.games.race.riddle.riddlerace.shop.GoogleShopService;
+
 /**
  * Created by marcel.weissgerber on 26.10.2016.
  */
@@ -185,7 +187,7 @@ public class ShopMenuView extends View {
                         overlay.closed = true;
                         shop.update();
                     }
-                }, TE.get(R.string.shop_buy_item_0), TE.get(R.string.shop_item_0_text_0), TE.get(R.string.shop_item_0_text_1), "", "");
+                }, TE.get(R.string.shop_buy_item_0), TE.get(R.string.shop_item_0_text_0), TE.get(R.string.shop_item_0_text_1), MainMenu.shop.price("editor").toString(), "");
                 shop.update();
             } else if (item1.contains(event.getX(), event.getY())) {
                 overlay.okActivate(new Runnable() {

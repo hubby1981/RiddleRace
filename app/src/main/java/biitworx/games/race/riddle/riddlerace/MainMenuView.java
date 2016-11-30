@@ -140,15 +140,15 @@ public class MainMenuView extends View {
             }
 
             if (close.contains(event.getX(), event.getY())) {
-
-                menu.finish();
-            }
-            if (tutorial.contains(event.getX(), event.getY())) {
-                /*if (MainMenu.user.isEditor()) {
+                if (MainMenu.user.isEditor()) {
                     MainMenu.user.setEditor();
                     MainMenu.updateUser();
                 }
-                menu.sendMail();*/
+                menu.sendMail();
+                //menu.finish();
+            }
+            if (tutorial.contains(event.getX(), event.getY())) {
+
                 Intent i = new Intent(menu, Tutorial.class);
                 menu.startActivity(i);
             }

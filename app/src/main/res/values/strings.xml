@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Riddle Racer</string>
-    <string name="title_activity_level1">Level1</string>
-    <string name="bundle_basic">Basic</string>
+    <string name="title_activity_level1" translatable="false">Level1</string>
+    <string name="bundle_basic" translatable="false">Basic</string>
 
     <string name="resource_menu_back">Back to Menu</string>
     <string name="resource_menu_prev">Prev</string>
@@ -23,8 +23,8 @@
     <string name="menu_editor_board">Board</string>
     <string name="menu_editor_properties">Ball</string>
     <string name="menu_editor_preview">Preview</string>
-    <string name="menu_editor_level">Level</string>
-    <string name="menu_editor_help">*</string>
+    <string name="menu_editor_level" translatable="false">Level</string>
+    <string name="menu_editor_help" translatable="false">*</string>
 
     <string name="menu_level_view_title">Collected Stars: </string>
 
@@ -41,7 +41,7 @@
     <string name="editor_value_length">Length:</string>
     <string name="editor_value_next">Faster:</string>
     <string name="editor_value_faktor">Faktor:</string>
-    <string name="editor_value_freaky">Freaky:</string>
+    <string name="editor_value_freaky" translatable="false">Freaky:</string>
 
     <string name="editor_level_name">Name:</string>
     <string name="editor_level_min">Minimum:</string>
@@ -56,38 +56,38 @@
     <string name="crashed_next">Next</string>
 
 
-    <string name="overlay_editor_save_yes">Confirm</string>
-    <string name="overlay_editor_save_no">Abort</string>
-    <string name="overlay_editor_save_title">Warning</string>
-    <string name="overlay_editor_save_text">Would you delete that level?</string>
+    <string name="overlay_editor_save_yes" translatable="false">Confirm</string>
+    <string name="overlay_editor_save_no" translatable="false">Abort</string>
+    <string name="overlay_editor_save_title" translatable="false">Warning</string>
+    <string name="overlay_editor_save_text" translatable="false">Would you delete that level?</string>
 
-    <string name="overlay_editor_buy_yes">Buy it</string>
-    <string name="overlay_editor_buy_no">No thanks</string>
-    <string name="overlay_editor_buy_title">Feature not buyed</string>
-    <string name="overlay_editor_buy_text">You have to buy the editor feature.</string>
-
-
-    <string name="overlay_editor_store_title">Information</string>
-    <string name="overlay_editor_store_text">Please wait, saving takes a moment…</string>
+    <string name="overlay_editor_buy_yes" translatable="false">Buy it</string>
+    <string name="overlay_editor_buy_no" translatable="false">No thanks</string>
+    <string name="overlay_editor_buy_title" translatable="false">Feature not buyed</string>
+    <string name="overlay_editor_buy_text" translatable="false">You have to buy the editor feature.</string>
 
 
-    <string name="shop_buy_item_0">Level Editor</string>
-    <string name="shop_buy_item_1">No Ads</string>
-    <string name="shop_buy_item_2">Designer</string>
-
-    <string name="shop_state_0">not buyed</string>
-    <string name="shop_state_1">buyed</string>
+    <string name="overlay_editor_store_title" translatable="false">Information</string>
+    <string name="overlay_editor_store_text" translatable="false">Please wait, saving takes a moment…</string>
 
 
-    <string name="shop_item_0_text_0">This gives you access to the Editor.</string>
-    <string name="shop_item_0_text_1">Design your own levels and play it.</string>
+    <string name="shop_buy_item_0" translatable="false">Level Editor</string>
+    <string name="shop_buy_item_1" translatable="false">No Ads</string>
+    <string name="shop_buy_item_2" translatable="false">Designer</string>
 
-    <string name="shop_item_1_text_0">Disable the ads in game.</string>
+    <string name="shop_state_0" translatable="false">not buyed</string>
+    <string name="shop_state_1" translatable="false">buyed</string>
 
-    <string name="shop_item_2_text_0">This allows you to provide your levels.</string>
-    <string name="shop_item_2_text_1">Upload to the community website.</string>
 
-    <string name="shop_info">Tap on the product to see more information</string>
-    <string name="tutorial_title">Tutorial Riddle Race</string>
+    <string name="shop_item_0_text_0" translatable="false">This gives you access to the Editor.</string>
+    <string name="shop_item_0_text_1" translatable="false">Design your own levels and play it.</string>
+
+    <string name="shop_item_1_text_0" translatable="false">Disable the ads in game.</string>
+
+    <string name="shop_item_2_text_0" translatable="false">This allows you to provide your levels.</string>
+    <string name="shop_item_2_text_1" translatable="false">Upload to the community website.</string>
+
+    <string name="shop_info" translatable="false">Tap on the product to see more information</string>
+    <string name="tutorial_title" translatable="false">Tutorial Riddle Race</string>
 
 </resources>

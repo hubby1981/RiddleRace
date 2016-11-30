@@ -15,6 +15,7 @@ import biitworx.games.race.riddle.riddlerace.data.helper.BaseDataObject;
 import biitworx.games.race.riddle.riddlerace.data.helper.DbField;
 import biitworx.games.race.riddle.riddlerace.data.helper.DbReference;
 import biitworx.games.race.riddle.riddlerace.data.helper.DbTable;
+import biitworx.games.race.riddle.riddlerace.data.helper.JsonIgnore;
 
 /**
  * Created by marce_000 on 12.10.2016.
@@ -30,6 +31,7 @@ public class Level extends BaseDataObject {
     @DbField(name = "name")
     private String name = "";
     @DbField(name = "score")
+    @JsonIgnore
     private int score = 0;
     @DbField(name = "next")
     private String next = "";

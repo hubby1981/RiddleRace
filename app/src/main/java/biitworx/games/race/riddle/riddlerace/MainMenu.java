@@ -1,5 +1,6 @@
 package biitworx.games.race.riddle.riddlerace;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -28,6 +29,7 @@ import biitworx.games.race.riddle.riddlerace.data.helper.poco.Level;
 import biitworx.games.race.riddle.riddlerace.data.helper.poco.LevelSet;
 import biitworx.games.race.riddle.riddlerace.data.helper.poco.Levels;
 import biitworx.games.race.riddle.riddlerace.data.helper.poco.User;
+import biitworx.games.race.riddle.riddlerace.shop.GoogleShopService;
 
 import static biitworx.games.race.riddle.riddlerace.data.helper.poco.Levels.*;
 
@@ -40,12 +42,20 @@ public class MainMenu extends AppCompatActivity {
     public static Bitmap back001;
     public static Bitmap back002;
     public static User user;
-
+    public static String myName = "";
+    public static GoogleShopService shop;
     public static boolean edit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        myName = getPackageName();
+        shop = new GoogleShopService();
+
+        Intent serviceIntent =
+                new Intent("com.android.vending.billing.InAppBillingService.BIND");
+        serviceIntent.setPackage("com.android.vending");
+        bindService(serviceIntent, shop.serviceConnection, Context.BIND_AUTO_CREATE);
 
         MainMenu.DATA = new DbHelper(this);
         MainMenu.res = getResources();
@@ -101,16 +111,6 @@ public class MainMenu extends AppCompatActivity {
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("plain/text");
 
-        /*JSONObject o = new JSONObject();
-        JSONArray a = new JSONArray();
-        for(LevelSet s: Levels.sets){
-            a.put(s.getJSON());
-        }
-        try {
-            o.put("sets",a);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
 
         JSONObject o = JSONHelper.mapFromObject(Levels.all);
 
