@@ -19,9 +19,10 @@ import java.util.TimerTask;
  */
 
 public class TutorialView extends View {
-    private Timer timer = new Timer();
+
     private boolean move = false;
     private String text1 = "Test";
+    private Storyboard storyboard = new Storyboard();
 
     public TutorialView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -32,7 +33,7 @@ public class TutorialView extends View {
         place.simulate = true;
 
 
-        createTask(new Runnable() {
+        storyboard.add(createTask(new Runnable() {
             @Override
             public void run() {
                 LevelEditorView.Holder h = LevelEditorView.getHolder(new Point(0, 3));
@@ -40,8 +41,8 @@ public class TutorialView extends View {
                 text1 = "First Circle";
 
             }
-        }, 5000);
-        createTask(new Runnable() {
+        }, 5));
+        storyboard.add(createTask(new Runnable() {
             @Override
             public void run() {
                 LevelEditorView.Holder h = LevelEditorView.getHolder(new Point(4, 3));
@@ -51,16 +52,49 @@ public class TutorialView extends View {
 
 
             }
-        }, 10000);
+        }, 10));
 
-        createTask(new Runnable() {
+        storyboard.add(createTask(new Runnable() {
             @Override
             public void run() {
                 move = true;
                 text1 = "";
 
             }
-        }, 30000);
+        }, 30));
+
+
+        storyboard.add(1,new Frame(new Runnable() {
+            @Override
+            public void run() {
+                text1 = "Tutorial begins in 5 Seconds";
+            }
+        },0));
+        storyboard.add(1,new Frame(new Runnable() {
+            @Override
+            public void run() {
+                text1 = "Tutorial begins in 4 Seconds";
+            }
+        },1));
+        storyboard.add(1,new Frame(new Runnable() {
+            @Override
+            public void run() {
+                text1 = "Tutorial begins in 3 Seconds";
+            }
+        },2));
+        storyboard.add(1,new Frame(new Runnable() {
+            @Override
+            public void run() {
+                text1 = "Tutorial begins in 2 Seconds";
+            }
+        },3));
+        storyboard.add(1,new Frame(new Runnable() {
+            @Override
+            public void run() {
+                text1 = "Tutorial begins in 1 Second";
+            }
+        },4));
+        storyboard.play(0);
     }
 
     public Tutorial view;
@@ -80,23 +114,11 @@ public class TutorialView extends View {
         return result;
     }
 
-    private void createTask(final Runnable r, long when) {
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                r.run();
-            }
-        }, when);
+    private Frame createTask(final Runnable r, long when) {
+
+        return new Frame(r, when);
     }
 
-    private void createTask(final Runnable r, long when, long retry) {
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                r.run();
-            }
-        }, when, retry);
-    }
 
     @Override
     public void onDraw(Canvas canvas) {
