@@ -73,7 +73,7 @@
 
     <string name="shop_buy_item_0" translatable="false">Level Editor</string>
     <string name="shop_buy_item_1" translatable="false">No Ads</string>
-    <string name="shop_buy_item_2" translatable="false">Designer</string>
+    <string name="shop_buy_item_2" translatable="false">Cheater Baby</string>
 
     <string name="shop_state_0" translatable="false">not buyed</string>
     <string name="shop_state_1" translatable="false">buyed</string>
@@ -84,8 +84,8 @@
 
     <string name="shop_item_1_text_0" translatable="false">Disable the ads in game.</string>
 
-    <string name="shop_item_2_text_0" translatable="false">This allows you to provide your levels.</string>
-    <string name="shop_item_2_text_1" translatable="false">Upload to the community website.</string>
+    <string name="shop_item_2_text_0" translatable="false">This allows you to play all level directly.</string>
+    <string name="shop_item_2_text_1" translatable="false">Try it and play the best levels now.</string>
 
     <string name="shop_info" translatable="false">Tap on the product to see more information</string>
     <string name="tutorial_title" translatable="false">Tutorial Riddle Race</string>

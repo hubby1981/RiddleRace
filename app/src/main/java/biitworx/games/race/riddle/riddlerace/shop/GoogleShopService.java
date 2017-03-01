@@ -52,7 +52,6 @@ public class GoogleShopService implements ShopService<IInAppBillingService> {
     public String price(String item) {
         Bundle query = new Bundle();
         ArrayList<String> list = new ArrayList<>();
-        list.add("noads");
         list.add(item);
 
 

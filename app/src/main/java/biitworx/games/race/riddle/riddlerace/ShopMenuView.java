@@ -196,7 +196,7 @@ public class ShopMenuView extends View {
                         overlay.closed = true;
                         shop.update();
                     }
-                }, TE.get(R.string.shop_buy_item_1), TE.get(R.string.shop_item_1_text_0), "", "", "");
+                }, TE.get(R.string.shop_buy_item_1), TE.get(R.string.shop_item_1_text_0),  MainMenu.shop.price("noads").toString(), "", "");
                 shop.update();
             } else if (item2.contains(event.getX(), event.getY())) {
                 overlay.okActivate(new Runnable() {
@@ -205,7 +205,7 @@ public class ShopMenuView extends View {
                         overlay.closed = true;
                         shop.update();
                     }
-                }, TE.get(R.string.shop_buy_item_2), TE.get(R.string.shop_item_2_text_0), TE.get(R.string.shop_item_2_text_1), "", "");
+                }, TE.get(R.string.shop_buy_item_2), TE.get(R.string.shop_item_2_text_0), TE.get(R.string.shop_item_2_text_1),  MainMenu.shop.price("cheater").toString(), "");
                 shop.update();
             } else {
                 if(menu.contains(event.getX(),event.getY()))
