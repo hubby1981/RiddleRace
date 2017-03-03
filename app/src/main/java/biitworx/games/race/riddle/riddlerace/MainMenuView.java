@@ -39,6 +39,7 @@ public class MainMenuView extends View {
     RectF shop = null;
     RectF close = null;
     RectF editor = null;
+    RectF rate=null;
 
     @Override
     public void onDraw(Canvas canvas) {
@@ -65,18 +66,19 @@ public class MainMenuView extends View {
 
         int top = img.bottom + h / 2;
 
-        setBasic = new RectF(inner.left + w, top, inner.right - w, top + h);
+        setBasic = new RectF(inner.left + w, top+h, inner.right - w, top + h*2);
         top += h * 1 + h / 8;
-        editor = new RectF(inner.left + w, top, inner.right - w, top + h);
+        editor = new RectF(inner.left + w, top+h, inner.right - w, top + h*2);
         top += h * 1 + h / 8;
 
         //options = new RectF(inner.left + w, top, inner.right - w, top + h);
         //top += h * 1 + h / 8;
 
-        shop = new RectF(inner.left + w, top, inner.right - w, top + h);
+        shop = new RectF(inner.left + w, top+h, inner.right - w, top + h*2);
         top += h * 1 + h / 8;
 
-        tutorial = new RectF(inner.left + w, top, inner.right - w, top + h);
+        tutorial = new RectF(inner.left + w, top+h, inner.right - w, top + h*2);
+        rate=tutorial;
         top += h * 1 + h;
         top += h * 1 + h;
 
@@ -84,7 +86,7 @@ public class MainMenuView extends View {
         close = new RectF(inner.left + w, top, inner.right - w, top + h);
 
         drawButton(canvas, setBasic, TE.get(R.string.menu_play), C.greenLight, C.green);
-        drawButton(canvas, tutorial, TE.get(R.string.menu_tutorial), C.blueLight, C.blue);
+        drawButton(canvas, rate, TE.get(R.string.menu_rate), C.blueLight, C.blue);
         //drawButton(canvas, options, TE.get(R.string.menu_options), C.blueLight, C.blue);
         drawButton(canvas, shop, TE.get(R.string.menu_shop), C.blueLight, C.blue);
         drawButton(canvas, editor, TE.get(R.string.menu_editor), C.blueLight, C.blue);
@@ -147,10 +149,9 @@ public class MainMenuView extends View {
                 menu.sendMail();
                 //menu.finish();
             }
-            if (tutorial.contains(event.getX(), event.getY())) {
+            if (rate.contains(event.getX(), event.getY())) {
 
-                Intent i = new Intent(menu, Tutorial.class);
-                menu.startActivity(i);
+                //rate open
             }
             if (editor.contains(event.getX(), event.getY())) {
 
